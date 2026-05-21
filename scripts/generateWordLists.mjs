@@ -1,5 +1,6 @@
 const DWYL_URL =
   "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
+const NORVIG_URL = "https://norvig.com/ngrams/count_1w.txt";
 
 async function fetchWordList() {
   console.log("Fetching dwyl word list...");
@@ -21,5 +22,21 @@ function filterByLength(words) {
   return buckets;
 }
 
+async function fetchFrequencies() {
+  console.log("Fetching Norvig frequency list...");
+  const res = await fetch(NORVIG_URL);
+  const text = await res.text();
+  const freqMap = new Map();
+  for (const line of text.split("\n")) {
+    const [word, count] = line.trim().split("\t");
+    if (word && count) freqMap.set(word.toLowerCase(), parseInt(count, 10));
+  }
+  console.log(`Total frequency entries: ${freqMap.size}`);
+  const sample = [...freqMap.entries()].slice(0, 5);
+  console.log(`Sample: ${sample.map(([w, c]) => `${w}(${c})`).join(", ")}`);
+  return freqMap;
+}
+
 const words = await fetchWordList();
 filterByLength(words);
+await fetchFrequencies();
