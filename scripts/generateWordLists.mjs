@@ -7,8 +7,19 @@ async function fetchWordList() {
   const text = await res.text();
   const words = text.split("\n").map((w) => w.trim().toLowerCase()).filter(Boolean);
   console.log(`Total words fetched: ${words.length}`);
-  console.log(`Sample: ${words.slice(0, 10).join(", ")}`);
   return words;
 }
 
-fetchWordList();
+function filterByLength(words) {
+  const buckets = { 4: [], 5: [], 6: [], 7: [], 8: [] };
+  for (const word of words) {
+    if (buckets[word.length]) buckets[word.length].push(word);
+  }
+  for (const [len, list] of Object.entries(buckets)) {
+    console.log(`${len}-letter words: ${list.length} (sample: ${list.slice(0, 5).join(", ")})`);
+  }
+  return buckets;
+}
+
+const words = await fetchWordList();
+filterByLength(words);
