@@ -48,7 +48,6 @@ export default function GameScreen({
   timeLeft,
   timing,
   revealedIndices,
-  hintsUsed,
   paused,
   onInput,
   onLetterHint,

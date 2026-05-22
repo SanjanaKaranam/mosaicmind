@@ -99,7 +99,7 @@ export function useUnscramble() {
       setInput('')
       setPhase('playing')
     } catch {}
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   // Persist progress during play (daily/random only)
   useEffect(() => {
