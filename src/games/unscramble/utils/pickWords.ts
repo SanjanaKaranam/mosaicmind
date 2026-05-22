@@ -3,6 +3,7 @@ import fiveLetter from '../../../data/unscramble/5-letter.json'
 import sixLetter from '../../../data/unscramble/6-letter.json'
 import sevenLetter from '../../../data/unscramble/7-letter.json'
 import eightLetter from '../../../data/unscramble/8-letter.json'
+import type { PlayMode } from '../hooks/useUnscramble'
 
 const WORD_LISTS: Record<number, string[]> = {
   4: fourLetter,
@@ -19,6 +20,14 @@ const ROUND_COUNTS: [number, number][] = [
   [6, 4],
   [7, 4],
   [8, 3],
+]
+
+const ALL_WORDS = [
+  ...fourLetter,
+  ...fiveLetter,
+  ...sixLetter,
+  ...sevenLetter,
+  ...eightLetter,
 ]
 
 function hashSeed(str: string): number {
@@ -49,14 +58,22 @@ function pickUnique(list: string[], count: number, rand: () => number): string[]
   return arr.slice(0, count)
 }
 
-export function pickWords(mode: 'daily' | 'random'): string[] {
+export function pickWords(play: PlayMode, wordCount?: number): string[] {
+  if (play === 'unlimited') {
+    const pool = [...ALL_WORDS]
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[pool[i], pool[j]] = [pool[j], pool[i]]
+    }
+    return pool.slice(0, wordCount ?? 200)
+  }
+
   const seed =
-    mode === 'daily'
+    play === 'daily'
       ? hashSeed(new Date().toISOString().slice(0, 10))
       : Math.floor(Math.random() * 2 ** 32)
 
   const rand = seededRandom(seed)
-
   return ROUND_COUNTS.flatMap(([len, count]) =>
     pickUnique(WORD_LISTS[len], count, rand)
   )
