@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local docs/planning notes
+docs/
+
+# Test/scratch scripts
+scripts/test*
