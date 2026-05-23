@@ -3,6 +3,14 @@ import { pickWords } from '../utils/pickWords'
 import { scramble } from '../utils/scramble'
 import { checkAnswer } from '../utils/checkAnswer'
 
+export function buildMerged(userInput: string, word: string, locked: number[]): string {
+  let ui = 0, result = ''
+  for (let i = 0; i < word.length; i++) {
+    result += locked.includes(i) ? word[i] : (userInput[ui++] ?? '')
+  }
+  return result
+}
+
 export type PlayMode = 'daily' | 'random' | 'unlimited'
 export type TimingMode = 'timed' | 'untimed'
 
@@ -214,9 +222,11 @@ export function useUnscramble() {
 
   const handleInput = useCallback((value: string) => {
     setInput(value)
-    if (value.length < currentWord.length) return
+    const maxUserLen = currentWord.length - revealedIndices.length
+    if (value.length < maxUserLen) return
 
-    if (checkAnswer(value, currentWord)) {
+    const merged = buildMerged(value, currentWord, revealedIndices)
+    if (checkAnswer(merged, currentWord)) {
       setScore(s => s + 1)
       setCorrectFlash(true)
       setTimeout(() => {
@@ -234,13 +244,17 @@ export function useUnscramble() {
       }, 600)
     }
     // Wrong answer: leave input so the user can backspace and correct it
-  }, [currentWord, currentRound, words])
+  }, [currentWord, currentRound, words, revealedIndices])
 
   const useLetterHint = useCallback(() => {
     if (!currentWord) return
     const unrevealed = currentWord.split('').map((_, i) => i).filter(i => !revealedIndices.includes(i))
     if (unrevealed.length === 0) return
     const pick = unrevealed[Math.floor(Math.random() * unrevealed.length)]
+    // Keep only user chars that fill non-locked positions strictly before pick
+    const unlockedBeforePick = Array.from({ length: pick }, (_, i) => i)
+      .filter(i => !revealedIndices.includes(i)).length
+    setInput(prev => prev.slice(0, unlockedBeforePick))
     setRevealedIndices(prev => [...prev, pick])
     setHintsUsed(prev => ({ ...prev, letters: prev.letters + 1 }))
   }, [currentWord, revealedIndices])

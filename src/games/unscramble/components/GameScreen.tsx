@@ -5,6 +5,7 @@ import AnswerInput from './AnswerInput'
 import HowToPlayModal from './HowToPlayModal'
 import { useDefinition, getAnagrams, getAnagramCount } from '../hooks/useDefinition'
 import type { TimingMode, HintsUsed } from '../hooks/useUnscramble'
+import { buildMerged } from '../hooks/useUnscramble'
 import { useSettings } from '../../../context/SettingsContext'
 
 const REVEAL_COUNTDOWN = 3
@@ -105,8 +106,11 @@ export default function GameScreen({
   // Type anywhere — route keypresses to the answer input
   useEffect(() => {
     if (paused || revealed) return
-    const available = letterCount(currentWord)
-    const used = letterCount(input)
+    const lockedStr = revealedIndices.map(i => currentWord[i]).join('')
+    const lockedCount = letterCount(lockedStr)
+    const fullAvailable = letterCount(currentWord)
+    const userUsed = letterCount(input)
+    const maxUserLen = currentWord.length - revealedIndices.length
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return
@@ -118,14 +122,15 @@ export default function GameScreen({
       }
       if (/^[a-zA-Z]$/.test(e.key)) {
         const letter = e.key.toLowerCase()
-        if ((used[letter] || 0) < (available[letter] || 0)) {
-          onInput((input + letter).slice(0, currentWord.length))
+        const effectiveAvail = (fullAvailable[letter] || 0) - (lockedCount[letter] || 0)
+        if ((userUsed[letter] || 0) < effectiveAvail && input.length < maxUserLen) {
+          onInput(input + letter)
         }
       }
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [input, onInput, currentWord, paused, revealed])
+  }, [input, onInput, currentWord, paused, revealed, revealedIndices])
 
   function handleDefinitionClick() {
     fetchDefinition()
@@ -244,8 +249,8 @@ export default function GameScreen({
           <div className="flex flex-col items-center gap-4">
             <ScrambledWord
               scrambled={scrambled}
-              input={input}
-              revealedIndices={revealedIndices}
+              input={buildMerged(input, currentWord, revealedIndices)}
+              revealedIndices={[]}
               currentWord={currentWord}
             />
             <div className="flex gap-3 flex-wrap justify-center">
@@ -278,6 +283,7 @@ export default function GameScreen({
             onChange={onInput}
             disabled={correctFlash}
             correctFlash={correctFlash}
+            revealedIndices={revealedIndices}
           />
 
           {canHint && (
