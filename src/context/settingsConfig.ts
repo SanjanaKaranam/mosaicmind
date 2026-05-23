@@ -11,7 +11,7 @@ export interface AccentPreset {
 }
 
 export const ACCENT_PRESETS: AccentPreset[] = [
-  { name: 'Pink',   accent: '#E342B7', hover: '#EE6BC5', subtle: 'rgba(227,66,183,0.15)', text: '#F9A8E4' },
+  { name: 'Pink',   accent: '#E90074', hover: '#FF4191', subtle: 'rgba(233,0,116,0.15)',   text: '#FFF078' },
   { name: 'Purple', accent: '#9333ea', hover: '#a855f7', subtle: 'rgba(147,51,234,0.15)', text: '#d8b4fe' },
   { name: 'Blue',   accent: '#2563eb', hover: '#3b82f6', subtle: 'rgba(37,99,235,0.15)',  text: '#93c5fd' },
   { name: 'Green',  accent: '#16a34a', hover: '#22c55e', subtle: 'rgba(22,163,74,0.15)',  text: '#86efac' },
@@ -43,7 +43,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   theme:    'dark',
-  accent:   '#E342B7',
+  accent:   '#E90074',
   fontSize: 'md',
   font:     'poppins',
 }

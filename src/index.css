@@ -2,12 +2,12 @@
 @import "tailwindcss";
 
 :root {
-  --accent: #E342B7;
-  --accent-hover: #EE6BC5;
-  --accent-subtle: rgba(227, 66, 183, 0.15);
-  --accent-text: #F9A8E4;
+  --accent: #E90074;
+  --accent-hover: #FF4191;
+  --accent-subtle: rgba(233, 0, 116, 0.15);
+  --accent-text: #FFF078;
 
-  --bg-page: #262424;
+  --bg-page: #000000;
   --font-family: 'Poppins', sans-serif;
   --font-scale: 1;
 }

@@ -14,7 +14,7 @@ interface SettingsContextValue {
 
 const SettingsContext = createContext<SettingsContextValue | null>(null)
 
-const SETTINGS_VERSION = '2'
+const SETTINGS_VERSION = '3'
 
 function applySettings(s: Settings) {
   const root = document.documentElement
