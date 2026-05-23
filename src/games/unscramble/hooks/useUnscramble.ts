@@ -63,7 +63,7 @@ export function useUnscramble() {
   const [wrongWords, setWrongWords] = useState<WrongWord[]>([])
   const [hintsUsed, setHintsUsed] = useState<HintsUsed>({ letters: 0, definitions: 0 })
   const [revealedIndices, setRevealedIndices] = useState<number[]>([])
-  const [revealWasTimeout, setRevealWasTimeout] = useState(false)
+  const [revealReason, setRevealReason] = useState<'timeout' | 'manual'>('timeout')
   const [paused, setPaused] = useState(false)
 
   const timeLeftRef = useRef(timeLeft)
@@ -160,7 +160,7 @@ export function useUnscramble() {
   useEffect(() => {
     if (phase !== 'playing' || mode?.timing !== 'timed' || timeLeft > 0) return
     setWrongWords(prev => [...prev, { word: currentWord, playerInput: '' }])
-    setRevealWasTimeout(true)
+    setRevealReason('timeout')
     setPhase('reveal')
   }, [timeLeft, phase, mode, currentWord])
 
@@ -178,7 +178,7 @@ export function useUnscramble() {
       setInput('')
       setTimeLeft(TIMER_SECONDS)
       setRevealedIndices([])
-      setRevealWasTimeout(false)
+      setRevealReason('timeout')
       setPaused(false)
       setPhase('playing')
     }, REVEAL_MS)
@@ -265,7 +265,10 @@ export function useUnscramble() {
     if (newlyRevealed.length === 0) return
     setRevealedIndices(currentWord.split('').map((_, i) => i))
     setHintsUsed(prev => ({ ...prev, letters: prev.letters + newlyRevealed.length }))
-  }, [currentWord, revealedIndices])
+    setWrongWords(prev => [...prev, { word: currentWord, playerInput: input }])
+    setRevealReason('manual')
+    setPhase('reveal')
+  }, [currentWord, revealedIndices, input])
 
   const shuffleScramble = useCallback(() => {
     if (currentWord) setScrambled(scramble(currentWord))
@@ -293,7 +296,7 @@ export function useUnscramble() {
     setInput('')
     setTimeLeft(TIMER_SECONDS)
     setRevealedIndices([])
-    setRevealWasTimeout(false)
+    setRevealReason('timeout')
     setPaused(false)
     setPhase('playing')
   }, [mode])
@@ -315,7 +318,7 @@ export function useUnscramble() {
     setWrongWords([])
     setHintsUsed({ letters: 0, definitions: 0 })
     setRevealedIndices([])
-    setRevealWasTimeout(false)
+    setRevealReason('timeout')
     setPaused(false)
   }, [mode])
 
@@ -342,7 +345,7 @@ export function useUnscramble() {
     endGame,
     restartGame,
     resetGame,
-    revealWasTimeout,
+    revealReason,
     paused,
     togglePause: useCallback(() => setPaused(p => !p), []),
   }

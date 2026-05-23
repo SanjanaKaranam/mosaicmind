@@ -6,11 +6,11 @@ interface Props {
   currentWord: string
   currentRound: number
   totalRounds: number
-  wasTimeout: boolean
+  reason: 'timeout' | 'manual'
   onGoHome: () => void
 }
 
-export default function RevealScreen({ currentWord, currentRound, totalRounds, wasTimeout, onGoHome }: Props) {
+export default function RevealScreen({ currentWord, currentRound, totalRounds, reason, onGoHome }: Props) {
   const [countdown, setCountdown] = useState(REVEAL_SECONDS)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function RevealScreen({ currentWord, currentRound, totalRounds, w
 
       <div className="flex flex-col items-center gap-3">
         <span className="text-red-400 text-2xl font-semibold">
-          {wasTimeout ? "Time's up!" : 'Wrong answer'}
+          {reason === 'timeout' ? "Time's up!" : 'Word revealed'}
         </span>
         <span className="text-gray-400 text-sm">The word was</span>
         <div className="flex gap-2">

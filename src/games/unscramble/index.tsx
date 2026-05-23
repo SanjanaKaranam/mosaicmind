@@ -42,7 +42,7 @@ export default function Unscramble() {
           currentWord={game.currentWord}
           currentRound={game.currentRound}
           totalRounds={game.totalRounds}
-          wasTimeout={game.revealWasTimeout}
+          reason={game.revealReason}
           onGoHome={game.goHome}
         />
       )}
