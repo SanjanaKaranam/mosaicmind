@@ -226,19 +226,9 @@ export function useUnscramble() {
       setInput('')
       setTimeLeft(TIMER_SECONDS)
       setRevealedIndices([])
-    } else {
-      // Untimed: retry forever across all play modes
-      // Timed: clear — timer handles reveal on expiry
-      if (mode?.timing === 'untimed') {
-        setInput('')
-        return
-      }
-      if (mode?.timing === 'timed') {
-        setInput('')
-        return
-      }
+      // Wrong answer: leave input so the user can backspace and correct it
     }
-  }, [currentWord, currentRound, words, mode])
+  }, [currentWord, currentRound, words])
 
   const useLetterHint = useCallback(() => {
     if (!currentWord) return
