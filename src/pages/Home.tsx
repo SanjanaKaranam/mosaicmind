@@ -63,8 +63,8 @@ export default function Home() {
     <div className="min-h-screen bg-gray-950 text-white">
       <div className="max-w-3xl mx-auto px-6 py-16 flex flex-col gap-12">
         <div className="flex flex-col gap-2">
-          <h1 className="logo-text text-5xl font-bold text-white tracking-tight">Mosaic Mind</h1>
-          <p className="text-gray-400 text-lg">A collection of word puzzles. New games coming soon.</p>
+          <h1 className="logo-text text-5xl font-bold tracking-tight bg-gradient-to-r from-[#FF4191] to-[#FFF078] bg-clip-text text-transparent">Mosaic Mind</h1>
+          <p className="text-[#FFF078]/80 text-lg">A collection of word puzzles. New games coming soon.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

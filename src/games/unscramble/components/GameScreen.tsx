@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Timer from './Timer'
 import ScrambledWord from './ScrambledWord'
 import AnswerInput from './AnswerInput'
+import HowToPlayModal from './HowToPlayModal'
 import { useDefinition, getAnagramCount } from '../hooks/useDefinition'
 import type { TimingMode, HintsUsed } from '../hooks/useUnscramble'
 import { useSettings } from '../../../context/SettingsContext'
@@ -64,6 +65,7 @@ export default function GameScreen({
   const canHint = timing !== 'timed'
   const { openPanel } = useSettings()
   const { entries: defEntries, shown: defShown, fetchDefinition } = useDefinition(currentWord)
+  const [howToPlayOpen, setHowToPlayOpen] = useState(false)
   const anagramCount = getAnagramCount(currentWord)
 
   const [letterHintsThisWord, setLetterHintsThisWord] = useState(0)
@@ -113,8 +115,8 @@ export default function GameScreen({
           <button onClick={onGoHome} className="text-gray-500 hover:text-white transition-colors text-sm">← Home</button>
           <button onClick={onRestart} className="text-gray-500 hover:text-white transition-colors text-sm">↺ Restart</button>
         </div>
-        <span>Word <span className="text-white font-bold">{currentRound + 1}</span> / {totalRounds}</span>
-        <span>Score <span className="text-white font-bold">{score}</span></span>
+        <span>Word <span className="text-[#FF4191] font-bold">{currentRound + 1}</span> / {totalRounds}</span>
+        <span>Score <span className="text-[#FFF078] font-bold">{score}</span></span>
       </div>
 
       {timing === 'timed' && (
@@ -133,14 +135,20 @@ export default function GameScreen({
 
       {paused ? (
         <div className="flex flex-col items-center gap-4 py-12">
-          <span className="text-3xl font-bold text-gray-500 tracking-widest uppercase">Paused</span>
+          <span className="text-3xl font-bold tracking-widest uppercase bg-gradient-to-r from-[#FF4191] to-[#FFF078] bg-clip-text text-transparent">Paused</span>
           <button
             onClick={onPause}
             className="px-10 py-4 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-lg font-semibold transition-colors"
           >
-            Resume
+            ▶ Resume
           </button>
-          <button onClick={openPanel} className="text-gray-500 hover:text-white text-sm transition-colors">
+          <button
+            onClick={() => setHowToPlayOpen(true)}
+            className="text-[#FFF078]/80 hover:text-[#FFF078] text-sm transition-colors"
+          >
+            ? How to Play
+          </button>
+          <button onClick={openPanel} className="text-[var(--accent-hover)] hover:text-white text-sm transition-colors">
             ⚙ Settings
           </button>
           <button onClick={onRestart} className="text-gray-500 hover:text-white text-sm transition-colors">
@@ -149,6 +157,7 @@ export default function GameScreen({
           <button onClick={onGoHome} className="text-gray-500 hover:text-white text-sm transition-colors">
             ← Go home
           </button>
+          {howToPlayOpen && <HowToPlayModal onClose={() => setHowToPlayOpen(false)} />}
         </div>
       ) : (
         <>

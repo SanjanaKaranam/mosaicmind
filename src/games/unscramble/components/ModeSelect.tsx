@@ -91,8 +91,8 @@ export default function ModeSelect({ onStart }: Props) {
         </Link>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <h1 className="text-4xl font-bold text-white tracking-wide">CRYPTEXT</h1>
-        <p className="text-gray-400 text-center max-w-sm">
+        <h1 className="text-4xl font-bold tracking-wide bg-gradient-to-r from-[#FF4191] to-[#FFF078] bg-clip-text text-transparent">CRYPTEXT</h1>
+        <p className="text-[#FFF078]/70 text-center max-w-sm">
           Unscramble 17 words — starting easy, getting harder.
         </p>
         <button
