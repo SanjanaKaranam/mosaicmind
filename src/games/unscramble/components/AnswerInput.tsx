@@ -5,6 +5,7 @@ interface Props {
   currentWord: string
   onChange: (value: string) => void
   disabled: boolean
+  correctFlash?: boolean
 }
 
 function letterCount(word: string): Record<string, number> {
@@ -24,7 +25,7 @@ function filterToAvailable(raw: string, currentWord: string): string {
   return result.slice(0, currentWord.length)
 }
 
-export default function AnswerInput({ value, currentWord, onChange, disabled }: Props) {
+export default function AnswerInput({ value, currentWord, onChange, disabled, correctFlash = false }: Props) {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -56,7 +57,9 @@ export default function AnswerInput({ value, currentWord, onChange, disabled }: 
             <div
               key={i}
               className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-colors select-none ${
-                letter
+                correctFlash
+                  ? 'bg-green-900 border-green-400 text-green-300'
+                  : letter
                   ? 'bg-gray-700 border-[var(--accent)] text-white'
                   : isActive
                   ? 'bg-gray-900 border-[var(--accent)] border-dashed text-transparent'

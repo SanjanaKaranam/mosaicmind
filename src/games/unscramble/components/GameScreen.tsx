@@ -22,6 +22,7 @@ interface Props {
   revealedIndices: number[]
   hintsUsed: HintsUsed
   paused: boolean
+  correctFlash: boolean
   onInput: (value: string) => void
   onLetterHint: () => void
   onRevealWord: () => void
@@ -51,6 +52,7 @@ export default function GameScreen({
   timing,
   revealedIndices,
   paused,
+  correctFlash,
   onInput,
   onLetterHint,
   onRevealWord,
@@ -196,7 +198,8 @@ export default function GameScreen({
             value={input}
             currentWord={currentWord}
             onChange={onInput}
-            disabled={false}
+            disabled={correctFlash}
+            correctFlash={correctFlash}
           />
 
           {canHint && (

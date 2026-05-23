@@ -25,6 +25,7 @@ export default function Unscramble() {
           revealedIndices={game.revealedIndices}
           hintsUsed={game.hintsUsed}
           paused={game.paused}
+          correctFlash={game.correctFlash}
           onInput={game.handleInput}
           onLetterHint={game.useLetterHint}
           onRevealWord={game.revealWord}

@@ -210,24 +210,30 @@ export function useUnscramble() {
     setPhase('playing')
   }, [])
 
+  const [correctFlash, setCorrectFlash] = useState(false)
+
   const handleInput = useCallback((value: string) => {
     setInput(value)
     if (value.length < currentWord.length) return
 
     if (checkAnswer(value, currentWord)) {
-      const next = currentRound + 1
       setScore(s => s + 1)
-      if (next >= words.length) {
-        setPhase('finished')
-        return
-      }
-      setCurrentRound(next)
-      setScrambled(scramble(words[next]))
-      setInput('')
-      setTimeLeft(TIMER_SECONDS)
-      setRevealedIndices([])
-      // Wrong answer: leave input so the user can backspace and correct it
+      setCorrectFlash(true)
+      setTimeout(() => {
+        setCorrectFlash(false)
+        const next = currentRound + 1
+        if (next >= words.length) {
+          setPhase('finished')
+          return
+        }
+        setCurrentRound(next)
+        setScrambled(scramble(words[next]))
+        setInput('')
+        setTimeLeft(TIMER_SECONDS)
+        setRevealedIndices([])
+      }, 600)
     }
+    // Wrong answer: leave input so the user can backspace and correct it
   }, [currentWord, currentRound, words])
 
   const useLetterHint = useCallback(() => {
@@ -320,6 +326,7 @@ export function useUnscramble() {
     revealedIndices,
     totalRounds,
     startGame,
+    correctFlash,
     handleInput,
     useLetterHint,
     revealWord,
