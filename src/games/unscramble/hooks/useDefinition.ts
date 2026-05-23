@@ -11,7 +11,7 @@ function sortedLetters(w: string) {
   return w.toLowerCase().split('').sort().join('')
 }
 
-function getAnagrams(word: string): string[] {
+export function getAnagrams(word: string): string[] {
   const sig = sortedLetters(word)
   return (validAnswers as string[]).filter(w => sortedLetters(w) === sig)
 }

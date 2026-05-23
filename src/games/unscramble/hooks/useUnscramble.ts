@@ -25,7 +25,6 @@ export interface HintsUsed {
 type Phase = 'idle' | 'playing' | 'reveal' | 'finished'
 
 const TIMER_SECONDS = 30
-const REVEAL_MS = 3000
 const LAST_KEY = 'unscramble_last_key'
 
 function getStorageKey(mode: GameMode): string | null {
@@ -164,26 +163,21 @@ export function useUnscramble() {
     setPhase('reveal')
   }, [timeLeft, phase, mode, currentWord])
 
-  // Reveal phase → auto-advance after 3 seconds
-  useEffect(() => {
-    if (phase !== 'reveal') return
-    const timeout = setTimeout(() => {
-      const next = currentRound + 1
-      if (next >= words.length) {
-        setPhase('finished')
-        return
-      }
-      setCurrentRound(next)
-      setScrambled(scramble(words[next]))
-      setInput('')
-      setTimeLeft(TIMER_SECONDS)
-      setRevealedIndices([])
-      setRevealReason('timeout')
-      setPaused(false)
-      setPhase('playing')
-    }, REVEAL_MS)
-    return () => clearTimeout(timeout)
-  }, [phase, currentRound, words])
+  const advanceFromReveal = useCallback(() => {
+    const next = currentRound + 1
+    if (next >= words.length) {
+      setPhase('finished')
+      return
+    }
+    setCurrentRound(next)
+    setScrambled(scramble(words[next]))
+    setInput('')
+    setTimeLeft(TIMER_SECONDS)
+    setRevealedIndices([])
+    setRevealReason('timeout')
+    setPaused(false)
+    setPhase('playing')
+  }, [currentRound, words])
 
   const startGame = useCallback((selectedMode: GameMode) => {
     const key = getStorageKey(selectedMode)
@@ -346,6 +340,7 @@ export function useUnscramble() {
     restartGame,
     resetGame,
     revealReason,
+    advanceFromReveal,
     paused,
     togglePause: useCallback(() => setPaused(p => !p), []),
   }
