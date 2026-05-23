@@ -14,6 +14,8 @@ interface SettingsContextValue {
 
 const SettingsContext = createContext<SettingsContextValue | null>(null)
 
+const SETTINGS_VERSION = '2'
+
 function applySettings(s: Settings) {
   const root = document.documentElement
   const preset = ACCENT_PRESETS.find(p => p.accent === s.accent) ?? ACCENT_PRESETS[0]
@@ -29,6 +31,7 @@ function applySettings(s: Settings) {
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(() => {
     try {
+      if (localStorage.getItem('mm_settings_v') !== SETTINGS_VERSION) return DEFAULT_SETTINGS
       const saved = localStorage.getItem('mm_settings')
       return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS
     } catch {
@@ -39,7 +42,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     applySettings(settings)
-    try { localStorage.setItem('mm_settings', JSON.stringify(settings)) } catch {}
+    try {
+      localStorage.setItem('mm_settings', JSON.stringify(settings))
+      localStorage.setItem('mm_settings_v', SETTINGS_VERSION)
+    } catch {}
   }, [settings])
 
   const update = (patch: Partial<Settings>) => setSettings(prev => ({ ...prev, ...patch }))
