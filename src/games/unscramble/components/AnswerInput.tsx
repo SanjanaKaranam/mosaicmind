@@ -57,9 +57,9 @@ export default function AnswerInput({ value, currentWord, onChange, disabled }: 
               key={i}
               className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-colors select-none ${
                 letter
-                  ? 'bg-gray-700 border-purple-500 text-white'
+                  ? 'bg-gray-700 border-[var(--accent)] text-white'
                   : isActive
-                  ? 'bg-gray-900 border-purple-500 border-dashed text-transparent'
+                  ? 'bg-gray-900 border-[var(--accent)] border-dashed text-transparent'
                   : 'bg-gray-900 border-gray-700 text-transparent'
               }`}
             >

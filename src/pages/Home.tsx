@@ -72,7 +72,7 @@ export default function Home() {
             const content = (
               <div className={`flex flex-col gap-3 p-6 rounded-2xl border transition-colors h-full ${
                 game.path
-                  ? 'bg-gray-900 border-gray-800 hover:border-purple-500 cursor-pointer'
+                  ? 'bg-gray-900 border-gray-800 hover:border-[var(--accent)] cursor-pointer'
                   : 'bg-gray-900/50 border-gray-800/50 cursor-not-allowed'
               }`}>
                 <span className="text-3xl">{game.emoji}</span>

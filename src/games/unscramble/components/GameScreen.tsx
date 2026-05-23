@@ -122,7 +122,7 @@ export default function GameScreen({
           </div>
           <button
             onClick={onPause}
-            className="px-3 py-1 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-purple-500 hover:text-white transition-colors"
+            className="px-3 py-1 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors"
           >
             {paused ? '▶ Resume' : '⏸ Pause'}
           </button>
@@ -134,7 +134,7 @@ export default function GameScreen({
           <span className="text-3xl font-bold text-gray-500 tracking-widest uppercase">Paused</span>
           <button
             onClick={onPause}
-            className="px-10 py-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-lg font-semibold transition-colors"
+            className="px-10 py-4 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-lg font-semibold transition-colors"
           >
             Resume
           </button>
@@ -157,13 +157,13 @@ export default function GameScreen({
             <div className="flex gap-3 flex-wrap justify-center">
               <button
                 onClick={onShuffle}
-                className="px-5 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-purple-500 hover:text-white transition-colors"
+                className="px-5 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors"
               >
                 ⇄ Shuffle
               </button>
               <button
                 onClick={() => onInput('')}
-                className="px-5 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-purple-500 hover:text-white transition-colors"
+                className="px-5 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors"
               >
                 × Clear
               </button>
@@ -194,14 +194,14 @@ export default function GameScreen({
                   className={`px-6 py-3 rounded-xl border text-base transition-colors ${
                     letterHintsThisWord >= MAX_LETTER_HINTS
                       ? 'bg-gray-900 border-gray-800 text-gray-600 cursor-not-allowed'
-                      : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-purple-500 hover:text-white'
+                      : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-[var(--accent)] hover:text-white'
                   }`}
                 >
                   💡 Letter hint ({MAX_LETTER_HINTS - letterHintsThisWord})
                 </button>
                 <button
                   onClick={onRevealWord}
-                  className="px-6 py-3 rounded-xl bg-gray-800 border border-gray-700 text-base text-gray-300 hover:border-purple-500 hover:text-white transition-colors"
+                  className="px-6 py-3 rounded-xl bg-gray-800 border border-gray-700 text-base text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors"
                 >
                   👁 Reveal word
                 </button>
@@ -211,7 +211,7 @@ export default function GameScreen({
                   className={`px-6 py-3 rounded-xl border text-base transition-colors ${
                     defShown
                       ? 'bg-gray-900 border-gray-800 text-gray-600 cursor-default'
-                      : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-purple-500 hover:text-white'
+                      : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-[var(--accent)] hover:text-white'
                   }`}
                 >
                   📖 Definition ({anagramCount})

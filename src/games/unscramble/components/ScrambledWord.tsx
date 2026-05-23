@@ -50,9 +50,10 @@ export default function ScrambledWord({ scrambled, input, revealedIndices, curre
               key={i}
               className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-colors ${
                 revealedIndices.includes(i)
-                  ? 'bg-purple-900/50 border-purple-500 text-purple-300'
+                  ? 'border-[var(--accent)] text-[var(--accent-text)]'
                   : 'bg-transparent border-gray-700 text-transparent'
               }`}
+            style={revealedIndices.includes(i) ? { backgroundColor: 'var(--accent-subtle)' } : {}}
             >
               {revealedIndices.includes(i) ? letter : '_'}
             </div>

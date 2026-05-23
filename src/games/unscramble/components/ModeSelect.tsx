@@ -84,7 +84,7 @@ export default function ModeSelect({ onStart }: Props) {
   return (
     <div className="flex flex-col items-center gap-8 py-12 px-4">
       <div className="w-full max-w-sm">
-        <Link to="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-purple-500 hover:text-white transition-colors">
+        <Link to="/" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors">
           ← All Games
         </Link>
       </div>
@@ -105,7 +105,7 @@ export default function ModeSelect({ onStart }: Props) {
               onClick={() => setPlay(opt.value)}
               className={`w-full py-3 px-4 rounded-xl border text-left transition-colors ${
                 play === opt.value
-                  ? 'border-purple-500 bg-purple-500/10 text-white'
+                  ? 'border-[var(--accent)] bg-[var(--accent-subtle)] text-white'
                   : 'border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500'
               }`}
             >
@@ -135,7 +135,7 @@ export default function ModeSelect({ onStart }: Props) {
                 disabled
                   ? 'border-gray-800 bg-gray-900/50 text-gray-600 cursor-not-allowed'
                   : timing === opt.value
-                  ? 'border-purple-500 bg-purple-500/10 text-white'
+                  ? 'border-[var(--accent)] bg-[var(--accent-subtle)] text-white'
                   : 'border-gray-700 bg-gray-900 text-gray-300 hover:border-gray-500'
               }`}
             >
@@ -162,7 +162,7 @@ export default function ModeSelect({ onStart }: Props) {
             placeholder={`Default: 200 (max ${MAX_UNLIMITED_WORDS})`}
             value={wordCountInput}
             onChange={e => setWordCountInput(e.target.value.replace(/[^0-9]/g, ''))}
-            className="w-full py-3 px-4 rounded-xl border border-gray-700 bg-gray-900 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="w-full py-3 px-4 rounded-xl border border-gray-700 bg-gray-900 text-white placeholder-gray-600 focus:outline-none focus:border-[var(--accent)] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           />
         </div>
       )}
@@ -171,13 +171,13 @@ export default function ModeSelect({ onStart }: Props) {
         <div className="flex gap-3 w-full max-w-sm">
           <button
             onClick={handleStart}
-            className="flex-1 py-4 rounded-xl font-bold text-lg bg-purple-600 hover:bg-purple-500 text-white transition-colors"
+            className="flex-1 py-4 rounded-xl font-bold text-lg bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white transition-colors"
           >
             ▶ Resume Game
           </button>
           <button
             onClick={handleNewGame}
-            className="px-5 py-4 rounded-xl font-bold text-lg bg-gray-800 border border-gray-700 text-gray-300 hover:border-purple-500 hover:text-white transition-colors"
+            className="px-5 py-4 rounded-xl font-bold text-lg bg-gray-800 border border-gray-700 text-gray-300 hover:border-[var(--accent)] hover:text-white transition-colors"
           >
             ↺ New Game
           </button>
@@ -189,7 +189,7 @@ export default function ModeSelect({ onStart }: Props) {
           className={`w-full max-w-sm py-4 rounded-xl font-bold text-lg transition-colors ${
             isLocked
               ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
-              : 'bg-purple-600 hover:bg-purple-500 text-white'
+              : 'bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white'
           }`}
         >
           {isLocked
