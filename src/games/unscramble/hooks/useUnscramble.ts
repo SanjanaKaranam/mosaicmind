@@ -291,6 +291,23 @@ export function useUnscramble() {
     setPhase('playing')
   }, [mode])
 
+  const replayGame = useCallback(() => {
+    if (!mode || words.length === 0) return
+    const key = getStorageKey(mode)
+    if (key) localStorage.removeItem(key)
+    setCurrentRound(0)
+    setScrambled(scramble(words[0]))
+    setScore(0)
+    setWrongWords([])
+    setHintsUsed({ letters: 0, definitions: 0 })
+    setInput('')
+    setTimeLeft(TIMER_SECONDS)
+    setRevealedIndices([])
+    setRevealReason('timeout')
+    setPaused(false)
+    setPhase('playing')
+  }, [mode, words])
+
   const resetGame = useCallback(() => {
     if (mode) {
       const key = getStorageKey(mode)
@@ -335,6 +352,7 @@ export function useUnscramble() {
     goHome,
     endGame,
     restartGame,
+    replayGame,
     resetGame,
     revealReason,
     advanceFromReveal,

@@ -1,7 +1,6 @@
 import { useUnscramble } from './hooks/useUnscramble'
 import ModeSelect from './components/ModeSelect'
 import GameScreen from './components/GameScreen'
-import RevealScreen from './components/RevealScreen'
 import ScoreScreen from './components/ScoreScreen'
 
 export default function Unscramble() {
@@ -12,7 +11,7 @@ export default function Unscramble() {
       {game.phase === 'idle' && (
         <ModeSelect onStart={game.startGame} />
       )}
-      {game.phase === 'playing' && (
+      {(game.phase === 'playing' || game.phase === 'reveal') && (
         <GameScreen
           currentRound={game.currentRound}
           totalRounds={game.totalRounds}
@@ -26,6 +25,9 @@ export default function Unscramble() {
           hintsUsed={game.hintsUsed}
           paused={game.paused}
           correctFlash={game.correctFlash}
+          revealed={game.phase === 'reveal'}
+          revealReason={game.revealReason}
+          onNext={game.advanceFromReveal}
           onInput={game.handleInput}
           onLetterHint={game.useLetterHint}
           onRevealWord={game.revealWord}
@@ -38,17 +40,6 @@ export default function Unscramble() {
           onEndGame={game.endGame}
         />
       )}
-      {game.phase === 'reveal' && (
-        <RevealScreen
-          currentWord={game.currentWord}
-          currentRound={game.currentRound}
-          totalRounds={game.totalRounds}
-          reason={game.revealReason}
-          timing={game.mode?.timing ?? 'timed'}
-          onNext={game.advanceFromReveal}
-          onGoHome={game.goHome}
-        />
-      )}
       {game.phase === 'finished' && game.mode && (
         <ScoreScreen
           score={game.score}
@@ -57,6 +48,7 @@ export default function Unscramble() {
           hintsUsed={game.hintsUsed}
           mode={game.mode}
           onPlayAgain={game.resetGame}
+          onReplay={game.replayGame}
         />
       )}
     </div>

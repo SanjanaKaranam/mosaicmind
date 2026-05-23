@@ -7,9 +7,10 @@ interface Props {
   hintsUsed: HintsUsed
   mode: GameMode
   onPlayAgain: () => void
+  onReplay: () => void
 }
 
-export default function ScoreScreen({ score, totalRounds, wrongWords, hintsUsed, mode, onPlayAgain }: Props) {
+export default function ScoreScreen({ score, totalRounds, wrongWords, hintsUsed, mode, onPlayAgain, onReplay }: Props) {
   const playLabel = mode.play === 'daily' ? 'Daily' : mode.play === 'random' ? 'Random' : 'Unlimited'
   const timingLabel = mode.timing === 'timed' ? 'Timed' : 'Untimed'
   const modeLabel = `${playLabel} · ${timingLabel}`
@@ -63,12 +64,20 @@ export default function ScoreScreen({ score, totalRounds, wrongWords, hintsUsed,
         </div>
       )}
 
-      <button
-        onClick={onPlayAgain}
-        className="px-8 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold transition-colors"
-      >
-        Play more unscramble
-      </button>
+      <div className="flex flex-col gap-3 w-full">
+        <button
+          onClick={onReplay}
+          className="w-full py-3 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-semibold transition-colors"
+        >
+          ↺ Replay this version
+        </button>
+        <button
+          onClick={onPlayAgain}
+          className="w-full py-3 rounded-xl bg-gray-800 border border-gray-700 hover:border-[var(--accent)] text-gray-300 hover:text-white font-semibold transition-colors"
+        >
+          Play more unscramble
+        </button>
+      </div>
     </div>
   )
 }
