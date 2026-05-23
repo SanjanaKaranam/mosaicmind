@@ -43,6 +43,7 @@ export default function Unscramble() {
           currentRound={game.currentRound}
           totalRounds={game.totalRounds}
           reason={game.revealReason}
+          onNext={game.advanceFromReveal}
           onGoHome={game.goHome}
         />
       )}
