@@ -70,10 +70,10 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {games.map(game => {
             const content = (
-              <div className={`flex flex-col gap-3 p-6 rounded-2xl border transition-colors h-full ${
+              <div className={`flex flex-col gap-3 p-6 rounded-2xl border transition-all h-full ${
                 game.path
-                  ? 'bg-gray-900 border-gray-800 hover:border-[var(--accent)] cursor-pointer'
-                  : 'bg-gray-900/50 border-gray-800/50 cursor-not-allowed'
+                  ? 'bg-[var(--accent-subtle)] border-[var(--accent)] hover:brightness-125 cursor-pointer'
+                  : 'bg-gray-900/40 border-gray-800/40 cursor-not-allowed'
               }`}>
                 <span className="text-3xl">{game.emoji}</span>
                 <div className="flex flex-col gap-1">
