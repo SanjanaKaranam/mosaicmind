@@ -323,18 +323,20 @@ export default function GameScreen({
                 <div className="w-full rounded-xl bg-gray-900 border border-gray-800 px-5 py-4 flex flex-col gap-3">
                   {(() => {
                     const wordRevealed = revealedIndices.length >= currentWord.length
+                    const anyHinted = revealedIndices.length > 0
+                    const showWordLabel = wordRevealed || anyHinted
                     const allLoading = defEntries.every(e => e.loading)
                     if (allLoading) return <p className="text-sm text-gray-500 italic">Loading...</p>
                     const visible = defEntries.filter(e => e.loading || e.text !== 'Could not load definition')
                     if (visible.length === 0) return <p className="text-sm text-gray-500 italic">Could not load definitions</p>
                     return visible.map((e, i) => (
                       <div key={e.word}>
-                        {(visible.length > 1 || wordRevealed) && (
+                        {(visible.length > 1 || showWordLabel) && (
                           <div className="flex items-center gap-2 mb-1">
                             {visible.length > 1 && (
                               <span className="text-xs text-gray-500 uppercase tracking-wider">Definition {i + 1}</span>
                             )}
-                            {wordRevealed && (
+                            {showWordLabel && (
                               <span className="text-xs font-bold uppercase tracking-wider text-purple-400">{e.word}</span>
                             )}
                           </div>
