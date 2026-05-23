@@ -7,6 +7,9 @@ import {
 interface SettingsContextValue {
   settings: Settings
   update: (patch: Partial<Settings>) => void
+  panelOpen: boolean
+  openPanel: () => void
+  closePanel: () => void
 }
 
 const SettingsContext = createContext<SettingsContextValue | null>(null)
@@ -32,6 +35,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       return DEFAULT_SETTINGS
     }
   })
+  const [panelOpen, setPanelOpen] = useState(false)
 
   useEffect(() => {
     applySettings(settings)
@@ -39,9 +43,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   }, [settings])
 
   const update = (patch: Partial<Settings>) => setSettings(prev => ({ ...prev, ...patch }))
+  const openPanel = () => setPanelOpen(true)
+  const closePanel = () => setPanelOpen(false)
 
   return (
-    <SettingsContext.Provider value={{ settings, update }}>
+    <SettingsContext.Provider value={{ settings, update, panelOpen, openPanel, closePanel }}>
       {children}
     </SettingsContext.Provider>
   )

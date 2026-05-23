@@ -3,10 +3,11 @@ import { ACCENT_PRESETS } from '../../context/settingsConfig'
 import type { FontFamily, FontSize, Theme } from '../../context/settingsConfig'
 
 const FONTS: { value: FontFamily; label: string; preview: string }[] = [
-  { value: 'system', label: 'System',       preview: 'system-ui, -apple-system, sans-serif' },
-  { value: 'inter',  label: 'Inter',        preview: "'Inter', sans-serif" },
-  { value: 'nunito', label: 'Nunito',       preview: "'Nunito', sans-serif" },
-  { value: 'mono',   label: 'Monospace',    preview: "'JetBrains Mono', monospace" },
+  { value: 'poppins', label: 'Poppins',    preview: "'Poppins', sans-serif" },
+  { value: 'system',  label: 'System',     preview: 'system-ui, -apple-system, sans-serif' },
+  { value: 'inter',   label: 'Inter',      preview: "'Inter', sans-serif" },
+  { value: 'nunito',  label: 'Nunito',     preview: "'Nunito', sans-serif" },
+  { value: 'mono',    label: 'Monospace',  preview: "'JetBrains Mono', monospace" },
 ]
 
 const SIZES: { value: FontSize; label: string }[] = [

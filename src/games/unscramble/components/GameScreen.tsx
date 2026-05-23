@@ -4,6 +4,7 @@ import ScrambledWord from './ScrambledWord'
 import AnswerInput from './AnswerInput'
 import { useDefinition, getAnagramCount } from '../hooks/useDefinition'
 import type { TimingMode, HintsUsed } from '../hooks/useUnscramble'
+import { useSettings } from '../../../context/SettingsContext'
 
 const TIMER_SECONDS = 30
 const MAX_LETTER_HINTS = 3
@@ -61,6 +62,7 @@ export default function GameScreen({
   onEndGame,
 }: Props) {
   const canHint = timing !== 'timed'
+  const { openPanel } = useSettings()
   const { entries: defEntries, shown: defShown, fetchDefinition } = useDefinition(currentWord)
   const anagramCount = getAnagramCount(currentWord)
 
@@ -137,6 +139,9 @@ export default function GameScreen({
             className="px-10 py-4 rounded-xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-lg font-semibold transition-colors"
           >
             Resume
+          </button>
+          <button onClick={openPanel} className="text-gray-500 hover:text-white text-sm transition-colors">
+            ⚙ Settings
           </button>
           <button onClick={onRestart} className="text-gray-500 hover:text-white text-sm transition-colors">
             ↺ Restart

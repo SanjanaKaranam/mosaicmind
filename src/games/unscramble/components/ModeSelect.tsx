@@ -1,6 +1,7 @@
 import type { PlayMode, TimingMode, GameMode } from '../hooks/useUnscramble'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import HowToPlayModal from './HowToPlayModal'
 
 interface Props {
   onStart: (mode: GameMode) => void
@@ -57,6 +58,7 @@ export default function ModeSelect({ onStart }: Props) {
   const [play, setPlay] = useState<PlayMode>('daily')
   const [timing, setTiming] = useState<TimingMode>('timed')
   const [wordCountInput, setWordCountInput] = useState('')
+  const [howToPlayOpen, setHowToPlayOpen] = useState(false)
 
   const dailyDone = getDailyDone()
   const dailyAnyDone = !!dailyDone['timed'] || !!dailyDone['untimed']
@@ -88,10 +90,18 @@ export default function ModeSelect({ onStart }: Props) {
           ← All Games
         </Link>
       </div>
-      <h1 className="text-4xl font-bold text-white tracking-wide">CRYPTEXT</h1>
-      <p className="text-gray-400 text-center max-w-sm">
-        Unscramble 17 words — starting easy, getting harder.
-      </p>
+      <div className="flex flex-col items-center gap-2">
+        <h1 className="text-4xl font-bold text-white tracking-wide">CRYPTEXT</h1>
+        <p className="text-gray-400 text-center max-w-sm">
+          Unscramble 17 words — starting easy, getting harder.
+        </p>
+        <button
+          onClick={() => setHowToPlayOpen(true)}
+          className="mt-1 text-sm text-[var(--accent-text)] hover:text-white border border-gray-700 hover:border-[var(--accent)] rounded-lg px-4 py-1.5 transition-colors"
+        >
+          ? How to Play
+        </button>
+      </div>
 
       <div className="flex flex-col gap-3 w-full max-w-sm">
         <p className="text-gray-400 text-sm uppercase tracking-widest">Mode</p>
@@ -201,6 +211,7 @@ export default function ModeSelect({ onStart }: Props) {
             : 'Start Game'}
         </button>
       )}
+      {howToPlayOpen && <HowToPlayModal onClose={() => setHowToPlayOpen(false)} />}
     </div>
   )
 }

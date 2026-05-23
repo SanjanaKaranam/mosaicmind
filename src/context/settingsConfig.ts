@@ -1,6 +1,6 @@
 export type Theme = 'dark' | 'light'
 export type FontSize = 'sm' | 'md' | 'lg'
-export type FontFamily = 'system' | 'inter' | 'nunito' | 'mono'
+export type FontFamily = 'system' | 'inter' | 'nunito' | 'mono' | 'poppins'
 
 export interface AccentPreset {
   name: string
@@ -11,6 +11,7 @@ export interface AccentPreset {
 }
 
 export const ACCENT_PRESETS: AccentPreset[] = [
+  { name: 'Pink',   accent: '#E342B7', hover: '#EE6BC5', subtle: 'rgba(227,66,183,0.15)', text: '#F9A8E4' },
   { name: 'Purple', accent: '#9333ea', hover: '#a855f7', subtle: 'rgba(147,51,234,0.15)', text: '#d8b4fe' },
   { name: 'Blue',   accent: '#2563eb', hover: '#3b82f6', subtle: 'rgba(37,99,235,0.15)',  text: '#93c5fd' },
   { name: 'Green',  accent: '#16a34a', hover: '#22c55e', subtle: 'rgba(22,163,74,0.15)',  text: '#86efac' },
@@ -20,10 +21,11 @@ export const ACCENT_PRESETS: AccentPreset[] = [
 ]
 
 export const FONT_FAMILIES: Record<FontFamily, string> = {
-  system: 'system-ui, -apple-system, sans-serif',
-  inter:  "'Inter', sans-serif",
-  nunito: "'Nunito', sans-serif",
-  mono:   "'JetBrains Mono', monospace",
+  system:  'system-ui, -apple-system, sans-serif',
+  poppins: "'Poppins', sans-serif",
+  inter:   "'Inter', sans-serif",
+  nunito:  "'Nunito', sans-serif",
+  mono:    "'JetBrains Mono', monospace",
 }
 
 export const FONT_SCALES: Record<FontSize, string> = {
@@ -41,7 +43,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   theme:    'dark',
-  accent:   '#9333ea',
+  accent:   '#E342B7',
   fontSize: 'md',
-  font:     'system',
+  font:     'poppins',
 }

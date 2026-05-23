@@ -1,15 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;600;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --accent: #9333ea;
-  --accent-hover: #a855f7;
-  --accent-subtle: rgba(147, 51, 234, 0.15);
-  --accent-text: #d8b4fe;
+  --accent: #E342B7;
+  --accent-hover: #EE6BC5;
+  --accent-subtle: rgba(227, 66, 183, 0.15);
+  --accent-text: #F9A8E4;
 
-  --font-family: system-ui, -apple-system, sans-serif;
+  --bg-page: #262424;
+  --font-family: 'Poppins', sans-serif;
   --font-scale: 1;
 }
+
+.bg-gray-950 { background-color: var(--bg-page); }
+
+.logo-text { font-family: 'Poppins', sans-serif; }
 
 html {
   font-size: calc(16px * var(--font-scale));
