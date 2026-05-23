@@ -159,12 +159,23 @@ export default function GameScreen({
       )}
 
       {revealed ? (
-        <div className="flex flex-col items-center gap-8">
-          <span className={`text-2xl font-semibold ${revealReason === 'timeout' ? 'text-red-400' : 'text-[#FFF078]'}`}>
-            {revealReason === 'timeout' ? "Time's up!" : 'Word revealed'}
-          </span>
+        <div className="flex flex-col items-center gap-6 w-full">
+          {/* Keep scrambled tiles visible so the reveal feels in-place */}
+          <ScrambledWord
+            scrambled={scrambled}
+            input=""
+            revealedIndices={[]}
+            currentWord={currentWord}
+          />
 
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-1">
+            <div className="w-full border-t border-gray-800" />
+            <span className={`text-sm font-semibold uppercase tracking-widest pt-3 ${revealReason === 'timeout' ? 'text-red-400' : 'text-[#FFF078]'}`}>
+              {revealReason === 'timeout' ? "Time's up!" : 'Word revealed'}
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center gap-4">
             {revealAnagrams.map(word => (
               <div key={word} className="flex flex-col items-center gap-2">
                 {revealAnagrams.length > 1 && (
