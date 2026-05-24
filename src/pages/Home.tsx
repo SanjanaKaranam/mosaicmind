@@ -193,6 +193,7 @@ function MagazineLogo() {
   const words = ['MOSAIC', 'MIND']
   return (
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, flexWrap: 'nowrap' }}>
+      <h1 className="sr-only">Mosaic Mind</h1>
       {words.map((word, wi) => {
         const offset = words.slice(0, wi).reduce((a, w) => a + w.length, 0)
         return (

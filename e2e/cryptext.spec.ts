@@ -29,7 +29,7 @@ test.describe('CrypText mode select', () => {
   test('selecting a mode highlights it', async ({ page }) => {
     await page.getByText('Random').click()
     const randomBtn = page.getByText('Random').locator('..')
-    await expect(randomBtn).toHaveClass(/border-purple-500/)
+    await expect(randomBtn).toHaveClass(/border-\[var\(--accent\)\]/)
   })
 })
 
