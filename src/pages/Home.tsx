@@ -75,7 +75,7 @@ function TilesMosaic() {
     <div
       className="absolute inset-0 overflow-hidden"
       aria-hidden="true"
-      style={{ backgroundColor: '#8B6914' }}
+      style={{ backgroundColor: '#8B6914', filter: 'blur(3px) brightness(0.65)', transform: 'scale(1.04)' }}
     >
       <div
         style={{
@@ -115,15 +115,41 @@ const fredoka = { fontFamily: "'Fredoka', 'Poppins', sans-serif", fontWeight: 70
 const pixel   = { fontFamily: "'Press Start 2P', monospace" }
 const hatch   = { backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0.22) 6px)' }
 
-function Brackets({ size = 10, color = 'rgba(0,0,0,0.45)' }: { size?: number; color?: string }) {
-  const b: React.CSSProperties = { position: 'absolute', width: size, height: size, borderColor: color, borderStyle: 'solid' }
+function LogoTiles() {
+  const words = ['MOSAIC', 'MIND']
+  const letterGroups = words.map((word, wi) => {
+    const offset = words.slice(0, wi).reduce((acc, w) => acc + w.length, 0)
+    return { word, letters: word.split('').map((letter, li) => ({ letter, idx: offset + li })) }
+  })
   return (
-    <>
-      <span style={{ ...b, top: 5, left: 5,    borderWidth: '2px 0 0 2px' }} />
-      <span style={{ ...b, top: 5, right: 5,   borderWidth: '2px 2px 0 0' }} />
-      <span style={{ ...b, bottom: 5, left: 5,  borderWidth: '0 0 2px 2px' }} />
-      <span style={{ ...b, bottom: 5, right: 5, borderWidth: '0 2px 2px 0' }} />
-    </>
+    <div className="flex items-end gap-2 flex-wrap" style={{ filter: 'drop-shadow(5px 5px 0 rgba(0,0,0,0.65))' }}>
+      {letterGroups.map(({ word, letters }) => (
+        <div key={word} className="flex" style={{ gap: 3 }}>
+          {letters.map(({ letter, idx }) => (
+            <div
+              key={idx}
+              style={{
+                width: 'clamp(46px, 6.5vw, 74px)',
+                height: 'clamp(46px, 6.5vw, 74px)',
+                backgroundColor: tileColor(idx * 6 + 2),
+                backgroundImage: tilePattern(idx * 4 + 13) ?? undefined,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '3px solid black',
+                boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.18)',
+              }}
+            >
+              <span style={{ ...fredoka, color: 'white', fontSize: 'clamp(1.3rem, 4vw, 2.2rem)', lineHeight: 1, WebkitTextStroke: '1.5px black', textShadow: '0 0 8px rgba(0,0,0,0.9), 1px 2px 4px rgba(0,0,0,0.8)' }}>
+                {letter}
+              </span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -160,21 +186,7 @@ export default function Home() {
         <TilesMosaic />
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
-          {/* Hatch-box logo — same brutalist style as before */}
-          <div className="flex items-stretch w-fit" style={{ boxShadow: '5px 5px 0 rgba(0,0,0,0.7)' }}>
-            <div className="relative bg-[#E90074] border-4 border-black px-6 py-4 overflow-hidden" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 6px)' }}>
-              <Brackets size={8} />
-              <span className="relative text-black leading-none" style={{ ...fredoka, fontSize: 'clamp(2rem, 8vw, 3.2rem)' }}>
-                MOSAIC
-              </span>
-            </div>
-            <div className="relative bg-black border-4 border-l-0 border-black px-6 py-4 overflow-hidden" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(233,0,116,0.2) 3px, rgba(233,0,116,0.2) 6px)' }}>
-              <Brackets size={8} color="rgba(233,0,116,0.5)" />
-              <span className="relative leading-none" style={{ ...fredoka, fontSize: 'clamp(2rem, 8vw, 3.2rem)', color: '#E90074' }}>
-                MIND
-              </span>
-            </div>
-          </div>
+          <LogoTiles />
 
           {/* Tagline — white text on pink */}
           <div className="mt-4">
