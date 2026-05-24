@@ -5,7 +5,7 @@ interface Props {
 
 export default function Timer({ timeLeft, total }: Props) {
   const pct = (timeLeft / total) * 100
-  const color = pct > 50 ? 'bg-purple-500' : pct > 25 ? 'bg-yellow-500' : 'bg-red-500'
+  const color = pct > 50 ? 'bg-[var(--accent)]' : pct > 25 ? 'bg-yellow-500' : 'bg-red-500'
 
   return (
     <div className="w-full flex items-center gap-3">

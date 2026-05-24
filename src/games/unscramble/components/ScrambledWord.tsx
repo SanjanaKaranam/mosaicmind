@@ -20,7 +20,7 @@ function getConsumedIndices(scrambled: string, input: string): number[] {
   return consumed
 }
 
-export default function ScrambledWord({ scrambled, input, revealedIndices, currentWord }: Props) {
+export default function ScrambledWord({ scrambled, input }: Props) {
   const consumedIndices = getConsumedIndices(scrambled, input)
 
   return (
@@ -43,22 +43,6 @@ export default function ScrambledWord({ scrambled, input, revealedIndices, curre
         })}
       </div>
 
-      {revealedIndices.length > 0 && (
-        <div className="flex gap-3 flex-wrap justify-center">
-          {currentWord.split('').map((letter, i) => (
-            <div
-              key={i}
-              className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-colors ${
-                revealedIndices.includes(i)
-                  ? 'bg-purple-900/50 border-purple-500 text-purple-300'
-                  : 'bg-transparent border-gray-700 text-transparent'
-              }`}
-            >
-              {revealedIndices.includes(i) ? letter : '_'}
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   )
 }
