@@ -116,64 +116,6 @@ const fredoka = { fontFamily: "'Fredoka', 'Poppins', sans-serif", fontWeight: 70
 const pixel   = { fontFamily: "'Press Start 2P', monospace" }
 const hatch   = { backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0.22) 6px)' }
 
-type LetterCfg = {
-  bg: string; color: string; rotate: string
-  skew?: string; lower?: boolean; font: React.CSSProperties
-  clipPath?: string; size?: string; w?: string; h?: string
-}
-
-const MAGAZINE_LETTERS: LetterCfg[] = [
-  // M — hot pink, Fredoka, wide uneven blob
-  { bg: '#FF2D78', color: '#000000', rotate: '-5deg',
-    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
-    clipPath: 'polygon(0% 22%, 14% 4%, 42% 10%, 70% 0%, 92% 6%, 100% 20%, 95% 48%, 100% 72%, 88% 100%, 60% 92%, 30% 100%, 8% 94%, 0% 74%, 6% 48%)',
-    size: 'clamp(74px, 8.5vw, 102px)' },
-  // O — golden yellow, Poppins italic, rough circle
-  { bg: '#FFD000', color: '#000000', rotate: '5deg', lower: true,
-    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontStyle: 'italic' },
-    clipPath: 'polygon(28% 6%, 55% 0%, 80% 8%, 96% 24%, 100% 52%, 90% 78%, 72% 96%, 45% 100%, 18% 90%, 4% 68%, 0% 42%, 8% 18%)',
-    size: 'clamp(70px, 8vw, 96px)' },
-  // S — cobalt blue, JetBrains Mono, slanted parallelogram
-  { bg: '#1565C0', color: '#FFFFFF', rotate: '-4deg',
-    font: { fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 },
-    clipPath: 'polygon(18% 0%, 48% 6%, 80% 0%, 100% 14%, 96% 44%, 100% 78%, 82% 100%, 48% 94%, 15% 100%, 0% 82%, 5% 50%, 0% 20%)',
-    size: 'clamp(72px, 8.2vw, 98px)' },
-  // A — orange, Fredoka, wide trapezoid wider at top
-  { bg: '#FF6B1A', color: '#111111', rotate: '6deg', lower: true,
-    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
-    clipPath: 'polygon(0% 10%, 20% 0%, 52% 8%, 82% 0%, 100% 12%, 94% 40%, 100% 68%, 88% 100%, 58% 92%, 28% 100%, 6% 88%, 0% 55%)',
-    size: 'clamp(72px, 8.2vw, 98px)' },
-  // I — deep teal, Poppins bold, tall narrow jagged
-  { bg: '#00695C', color: '#FFE600', rotate: '-4.5deg',
-    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800 },
-    clipPath: 'polygon(10% 2%, 45% 8%, 88% 0%, 100% 18%, 92% 50%, 100% 80%, 86% 100%, 48% 92%, 12% 100%, 0% 80%, 6% 50%, 0% 22%)',
-    w: 'clamp(54px, 6vw, 74px)', h: 'clamp(74px, 8.5vw, 102px)' },
-  // C — crimson, Poppins 800, concave left side
-  { bg: '#C62828', color: '#FFFFFF', rotate: '2.5deg',
-    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800 },
-    clipPath: 'polygon(8% 0%, 45% 6%, 88% 0%, 100% 16%, 96% 48%, 100% 80%, 84% 100%, 42% 95%, 10% 100%, 0% 80%, 10% 52%, 0% 24%)',
-    size: 'clamp(72px, 8.2vw, 98px)' },
-  // M — near-black, Fredoka, irregular pentagon-ish
-  { bg: '#121212', color: '#FF2D78', rotate: '-3deg',
-    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
-    clipPath: 'polygon(4% 16%, 20% 2%, 50% 8%, 82% 0%, 100% 18%, 96% 46%, 100% 75%, 85% 100%, 52% 94%, 20% 100%, 2% 86%, 0% 55%)',
-    size: 'clamp(74px, 8.5vw, 102px)' },
-  // I — sky blue, Nunito italic, stumpy wide blob
-  { bg: '#0288D1', color: '#000000', rotate: '6deg', lower: true,
-    font: { fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontStyle: 'italic' },
-    clipPath: 'polygon(5% 8%, 38% 0%, 75% 6%, 96% 0%, 100% 22%, 94% 58%, 100% 88%, 72% 100%, 38% 94%, 8% 100%, 0% 78%, 6% 45%)',
-    w: 'clamp(54px, 6vw, 74px)', h: 'clamp(72px, 8vw, 96px)' },
-  // N — lime-yellow, Press Start 2P, chunky rotated block
-  { bg: '#C8E600', color: '#111111', rotate: '-5deg',
-    font: { fontFamily: "'Press Start 2P', monospace" },
-    clipPath: 'polygon(6% 5%, 25% 0%, 58% 7%, 90% 0%, 100% 15%, 95% 45%, 100% 78%, 88% 100%, 55% 93%, 22% 100%, 4% 92%, 0% 62%, 5% 30%)',
-    size: 'clamp(72px, 8vw, 96px)' },
-  // D — deep purple, Nunito 800, wide with torn bottom
-  { bg: '#6A1B9A', color: '#FFFFFF', rotate: '4deg',
-    font: { fontFamily: "'Nunito', sans-serif", fontWeight: 800 },
-    clipPath: 'polygon(5% 6%, 30% 0%, 65% 8%, 95% 0%, 100% 20%, 96% 52%, 100% 80%, 90% 100%, 55% 92%, 22% 100%, 4% 88%, 0% 55%, 6% 24%)',
-    size: 'clamp(72px, 8.2vw, 98px)' },
-]
 
 const RANSOM_ROTATIONS = [-4, 3.5, -2.5, 5, -4.5, 2.5, 0, -3.5, 5.5, -2]
 const RANSOM_COLORS = [
@@ -260,9 +202,6 @@ function Tape({ wide = false }: { wide?: boolean }) {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const available = games.filter(g => g.path)
-  const soon      = games.filter(g => !g.path)
-
   return (
     <div
       className="min-h-screen text-white overflow-x-hidden flex flex-col"
