@@ -5,10 +5,11 @@ interface GameTile {
   description: string
   path: string | null
   emoji: string
+  icon?: string
 }
 
 const games: GameTile[] = [
-  { title: 'CrypText',       description: 'Unscramble words against the clock. How many can you get?', path: '/unscramble', emoji: '🔀' },
+  { title: 'CrypText',       description: 'Unscramble words against the clock. How many can you get?', path: '/unscramble', emoji: '🔀', icon: '/assets/cryptext-icon.svg' },
   { title: 'Wordle',         description: 'Guess the hidden 5-letter word in 6 tries.',                path: null,          emoji: '🟩' },
   { title: 'Guess The Word', description: 'Figure out the mystery word from clues.',                   path: null,          emoji: '💬' },
   { title: 'Word Connect',   description: 'Find words hidden in a grid of letters.',                   path: null,          emoji: '🔗' },
@@ -75,7 +76,7 @@ function TilesMosaic() {
     <div
       className="absolute inset-0 overflow-hidden"
       aria-hidden="true"
-      style={{ backgroundColor: '#8B6914', filter: 'blur(3px) brightness(0.65)', transform: 'scale(1.04)' }}
+      style={{ backgroundColor: '#8B6914' }}
     >
       <div
         style={{
@@ -115,40 +116,133 @@ const fredoka = { fontFamily: "'Fredoka', 'Poppins', sans-serif", fontWeight: 70
 const pixel   = { fontFamily: "'Press Start 2P', monospace" }
 const hatch   = { backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0.22) 6px)' }
 
-function LogoTiles() {
+type LetterCfg = {
+  bg: string; color: string; rotate: string
+  skew?: string; lower?: boolean; font: React.CSSProperties
+  clipPath?: string; size?: string; w?: string; h?: string
+}
+
+const MAGAZINE_LETTERS: LetterCfg[] = [
+  // M — hot pink, Fredoka, wide uneven blob
+  { bg: '#FF2D78', color: '#000000', rotate: '-5deg',
+    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
+    clipPath: 'polygon(0% 22%, 14% 4%, 42% 10%, 70% 0%, 92% 6%, 100% 20%, 95% 48%, 100% 72%, 88% 100%, 60% 92%, 30% 100%, 8% 94%, 0% 74%, 6% 48%)',
+    size: 'clamp(74px, 8.5vw, 102px)' },
+  // O — golden yellow, Poppins italic, rough circle
+  { bg: '#FFD000', color: '#000000', rotate: '5deg', lower: true,
+    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontStyle: 'italic' },
+    clipPath: 'polygon(28% 6%, 55% 0%, 80% 8%, 96% 24%, 100% 52%, 90% 78%, 72% 96%, 45% 100%, 18% 90%, 4% 68%, 0% 42%, 8% 18%)',
+    size: 'clamp(70px, 8vw, 96px)' },
+  // S — cobalt blue, JetBrains Mono, slanted parallelogram
+  { bg: '#1565C0', color: '#FFFFFF', rotate: '-4deg',
+    font: { fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 },
+    clipPath: 'polygon(18% 0%, 48% 6%, 80% 0%, 100% 14%, 96% 44%, 100% 78%, 82% 100%, 48% 94%, 15% 100%, 0% 82%, 5% 50%, 0% 20%)',
+    size: 'clamp(72px, 8.2vw, 98px)' },
+  // A — orange, Fredoka, wide trapezoid wider at top
+  { bg: '#FF6B1A', color: '#111111', rotate: '6deg', lower: true,
+    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
+    clipPath: 'polygon(0% 10%, 20% 0%, 52% 8%, 82% 0%, 100% 12%, 94% 40%, 100% 68%, 88% 100%, 58% 92%, 28% 100%, 6% 88%, 0% 55%)',
+    size: 'clamp(72px, 8.2vw, 98px)' },
+  // I — deep teal, Poppins bold, tall narrow jagged
+  { bg: '#00695C', color: '#FFE600', rotate: '-4.5deg',
+    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800 },
+    clipPath: 'polygon(10% 2%, 45% 8%, 88% 0%, 100% 18%, 92% 50%, 100% 80%, 86% 100%, 48% 92%, 12% 100%, 0% 80%, 6% 50%, 0% 22%)',
+    w: 'clamp(54px, 6vw, 74px)', h: 'clamp(74px, 8.5vw, 102px)' },
+  // C — crimson, Poppins 800, concave left side
+  { bg: '#C62828', color: '#FFFFFF', rotate: '2.5deg',
+    font: { fontFamily: "'Poppins', sans-serif", fontWeight: 800 },
+    clipPath: 'polygon(8% 0%, 45% 6%, 88% 0%, 100% 16%, 96% 48%, 100% 80%, 84% 100%, 42% 95%, 10% 100%, 0% 80%, 10% 52%, 0% 24%)',
+    size: 'clamp(72px, 8.2vw, 98px)' },
+  // M — near-black, Fredoka, irregular pentagon-ish
+  { bg: '#121212', color: '#FF2D78', rotate: '-3deg',
+    font: { fontFamily: "'Fredoka', sans-serif", fontWeight: 700 },
+    clipPath: 'polygon(4% 16%, 20% 2%, 50% 8%, 82% 0%, 100% 18%, 96% 46%, 100% 75%, 85% 100%, 52% 94%, 20% 100%, 2% 86%, 0% 55%)',
+    size: 'clamp(74px, 8.5vw, 102px)' },
+  // I — sky blue, Nunito italic, stumpy wide blob
+  { bg: '#0288D1', color: '#000000', rotate: '6deg', lower: true,
+    font: { fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontStyle: 'italic' },
+    clipPath: 'polygon(5% 8%, 38% 0%, 75% 6%, 96% 0%, 100% 22%, 94% 58%, 100% 88%, 72% 100%, 38% 94%, 8% 100%, 0% 78%, 6% 45%)',
+    w: 'clamp(54px, 6vw, 74px)', h: 'clamp(72px, 8vw, 96px)' },
+  // N — lime-yellow, Press Start 2P, chunky rotated block
+  { bg: '#C8E600', color: '#111111', rotate: '-5deg',
+    font: { fontFamily: "'Press Start 2P', monospace" },
+    clipPath: 'polygon(6% 5%, 25% 0%, 58% 7%, 90% 0%, 100% 15%, 95% 45%, 100% 78%, 88% 100%, 55% 93%, 22% 100%, 4% 92%, 0% 62%, 5% 30%)',
+    size: 'clamp(72px, 8vw, 96px)' },
+  // D — deep purple, Nunito 800, wide with torn bottom
+  { bg: '#6A1B9A', color: '#FFFFFF', rotate: '4deg',
+    font: { fontFamily: "'Nunito', sans-serif", fontWeight: 800 },
+    clipPath: 'polygon(5% 6%, 30% 0%, 65% 8%, 95% 0%, 100% 20%, 96% 52%, 100% 80%, 90% 100%, 55% 92%, 22% 100%, 4% 88%, 0% 55%, 6% 24%)',
+    size: 'clamp(72px, 8.2vw, 98px)' },
+]
+
+const RANSOM_ROTATIONS = [-4, 3.5, -2.5, 5, -4.5, 2.5, 0, -3.5, 5.5, -2]
+const RANSOM_COLORS = [
+  TILE_PALETTE[20], // #1E3A8A  deep navy
+  TILE_PALETTE[16], // #7C3AED  deep violet
+  TILE_PALETTE[2],  // #991B1B  deep crimson
+  TILE_PALETTE[23], // #92400E  deep burnt orange
+  TILE_PALETTE[12], // #065F46  deep emerald
+  TILE_PALETTE[0],  // #1E40AF  deep blue
+  TILE_PALETTE[6],  // #0D9488  deep teal
+  TILE_PALETTE[7],  // #C2410C  deep rust
+  TILE_PALETTE[24], // #14532D  deep forest green
+  TILE_PALETTE[22], // #7F1D1D  deep burgundy
+]
+
+function MagazineLogo() {
   const words = ['MOSAIC', 'MIND']
-  const letterGroups = words.map((word, wi) => {
-    const offset = words.slice(0, wi).reduce((acc, w) => acc + w.length, 0)
-    return { word, letters: word.split('').map((letter, li) => ({ letter, idx: offset + li })) }
-  })
   return (
-    <div className="flex items-end gap-2 flex-wrap" style={{ filter: 'drop-shadow(5px 5px 0 rgba(0,0,0,0.65))' }}>
-      {letterGroups.map(({ word, letters }) => (
-        <div key={word} className="flex" style={{ gap: 3 }}>
-          {letters.map(({ letter, idx }) => (
-            <div
-              key={idx}
-              style={{
-                width: 'clamp(46px, 6.5vw, 74px)',
-                height: 'clamp(46px, 6.5vw, 74px)',
-                backgroundColor: tileColor(idx * 6 + 2),
-                backgroundImage: tilePattern(idx * 4 + 13) ?? undefined,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '3px solid black',
-                boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.18)',
-              }}
-            >
-              <span style={{ ...fredoka, color: 'white', fontSize: 'clamp(1.3rem, 4vw, 2.2rem)', lineHeight: 1, WebkitTextStroke: '1.5px black', textShadow: '0 0 8px rgba(0,0,0,0.9), 1px 2px 4px rgba(0,0,0,0.8)' }}>
-                {letter}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))}
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 14, flexWrap: 'nowrap' }}>
+      {words.map((word, wi) => {
+        const offset = words.slice(0, wi).reduce((a, w) => a + w.length, 0)
+        return (
+          <div key={word} style={{ display: 'flex', alignItems: 'flex-end', gap: 3 }}>
+            {word.split('').map((letter, li) => (
+              <div key={li} style={{
+                transform: `rotate(${RANSOM_ROTATIONS[offset + li]}deg)`,
+                filter: 'drop-shadow(2px 5px 6px rgba(0,0,0,0.55))',
+                flexShrink: 0,
+              }}>
+                <span style={{
+                  fontFamily: "'CSAnikaDrawn', 'Fredoka', sans-serif",
+                  fontSize: 'clamp(3rem, 7vw, 5.2rem)',
+                  lineHeight: 1,
+                  display: 'block',
+                  color: RANSOM_COLORS[offset + li],
+                }}>
+                  {letter}
+                </span>
+              </div>
+            ))}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function TornPaper({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ position: 'relative', minHeight: '200px' }}>
+      <img
+        src="/assets/torn-paper.png"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: 'auto',
+          height: 'auto',
+          maxWidth: 'none',
+          transform: 'translate(-50%, -50%) rotate(90deg) scaleX(0.45) scaleY(1.1)',
+          filter: 'brightness(0.82) saturate(0.85)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+      <div style={{ position: 'relative', zIndex: 1, padding: '28px 48px 22px', minHeight: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        {children}
+      </div>
     </div>
   )
 }
@@ -170,7 +264,7 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen text-white overflow-x-hidden"
+      className="min-h-screen text-white overflow-x-hidden flex flex-col"
       style={{
         backgroundColor: '#2D6623',
         backgroundImage: [
@@ -182,26 +276,31 @@ export default function Home() {
     >
 
       {/* ── Tile mosaic hero ──────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ minHeight: 200 }}>
+      <section className="relative" style={{ minHeight: 200 }}>
         <TilesMosaic />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
-          <LogoTiles />
-
-          {/* Tagline — white text on pink */}
-          <div className="mt-4">
-            <span
-              className="inline-block bg-[#E90074] px-3 py-2 text-[8px] uppercase tracking-widest"
-              style={{ ...pixel, color: 'white' }}
-            >
-              Word games &amp; puzzles
-            </span>
-          </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-8 py-2">
+          <TornPaper>
+            <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '820px', width: '100%' }}>
+              <MagazineLogo />
+              <span style={{
+                position: 'absolute', bottom: -34, right: 8,
+                transform: 'rotate(3deg)',
+                fontFamily: "'SoftlyHandwritten', cursive",
+                fontSize: 'clamp(1.6rem, 3.2vw, 2.4rem)',
+                color: '#000',
+                lineHeight: 1,
+                WebkitTextStroke: '1px #000',
+              }}>
+                games &amp; puzzles
+              </span>
+            </div>
+          </TornPaper>
         </div>
       </section>
 
       {/* ── Divider band ──────────────────────────────────────────────── */}
-      <div className="relative bg-[#E90074] border-y-4 border-black px-6 py-3 overflow-hidden">
+      <div className="relative bg-[#FFF078] border-y-4 border-black px-6 py-3 overflow-hidden">
         <div className="absolute inset-y-0 left-0 w-16" style={hatch} />
         <div className="absolute inset-y-0 right-0 w-16" style={hatch} />
         <p className="text-center text-black font-black uppercase tracking-[0.3em] text-sm" style={fredoka}>
@@ -210,46 +309,42 @@ export default function Home() {
       </div>
 
       {/* ── Cards ─────────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-8 py-14 flex flex-col gap-14">
-
-        {available.map(game => (
-          <Link key={game.title} to={game.path!} className="group block" style={{ transform: ROTATIONS[game.title] }}>
-            <div
-              className="relative rounded-sm transition-all duration-200 group-hover:brightness-105"
-              style={{ backgroundColor: CARD_COLOR[game.title], boxShadow: '4px 10px 28px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25)' }}
-            >
-              <Tape wide />
-              <div className="flex items-center gap-6 px-8 py-7">
-                <span className="text-5xl shrink-0">{game.emoji}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-black/50 text-[8px] uppercase tracking-widest mb-1.5" style={pixel}>Now Playing</p>
-                  <h2 className="text-3xl text-black uppercase leading-none" style={fredoka}>{game.title}</h2>
-                  <p className="text-black/70 text-sm font-bold mt-2">{game.description}</p>
-                </div>
-                <span className="text-black text-xl shrink-0 group-hover:translate-x-1 transition-transform" style={fredoka}>PLAY →</span>
-              </div>
-            </div>
-          </Link>
-        ))}
-
+      <section className="max-w-7xl mx-auto px-8 py-8 flex-1 w-full">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10">
-          {soon.map(game => (
-            <div
-              key={game.title}
-              className="relative cursor-not-allowed hover:brightness-105 transition-all duration-200"
-              style={{ transform: ROTATIONS[game.title], transformOrigin: 'center top' }}
-            >
-              <div className="rounded-sm" style={{ backgroundColor: CARD_COLOR[game.title], boxShadow: '3px 8px 20px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2)' }}>
+          {games.map(game => {
+            const inner = (
+              <div className="rounded-sm relative" style={{ backgroundColor: CARD_COLOR[game.title], boxShadow: '3px 8px 20px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2)' }}>
                 <Tape />
-                <div className="px-4 pt-6 pb-5">
-                  <span className="text-3xl">{game.emoji}</span>
-                  <h2 className="text-base text-black uppercase mt-3 leading-tight" style={fredoka}>{game.title}</h2>
-                  <p className="text-sm font-bold text-black/65 mt-1.5 leading-snug">{game.description}</p>
-                  <span className="block text-[7px] text-black/50 uppercase mt-3" style={pixel}>Soon</span>
+                <div className="px-6 pt-8 pb-6 flex flex-col min-h-[190px]">
+                  <div className="flex items-center gap-2">
+                    {game.icon
+                      ? <img src={game.icon} alt="" className="h-12 w-auto" />
+                      : <span className="text-3xl">{game.emoji}</span>
+                    }
+                    <h2 className="text-lg text-black uppercase leading-tight" style={{ fontFamily: "'KarmaticArcade', 'Fredoka', sans-serif" }}>{game.title}</h2>
+                  </div>
+                  <p className="text-sm text-black/70 mt-2 leading-snug flex-1" style={{ fontFamily: "'Balmont', sans-serif" }}>{game.description}</p>
+                  <div className="flex justify-end mt-4">
+                    <span className="inline-block text-xs uppercase px-3 py-1.5 border-2 border-black/40 rounded-sm"
+                      style={{ fontFamily: "'Balmont', sans-serif", fontWeight: 700, color: game.path ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)' }}>
+                      {game.path ? 'Play Now →' : 'Soon'}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+            return game.path ? (
+              <Link key={game.title} to={game.path} className="group block relative transition-all duration-200 hover:brightness-105"
+                style={{ transform: ROTATIONS[game.title], transformOrigin: 'center top' }}>
+                {inner}
+              </Link>
+            ) : (
+              <div key={game.title} className="relative cursor-not-allowed hover:brightness-105 transition-all duration-200"
+                style={{ transform: ROTATIONS[game.title], transformOrigin: 'center top' }}>
+                {inner}
+              </div>
+            )
+          })}
         </div>
       </section>
 
