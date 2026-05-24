@@ -1,11 +1,4 @@
 @font-face {
-  font-family: 'TheRansomNotes';
-  src: url('/fonts/TheRansomNotes-Demo.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'CSAnikaDrawn';
   src: url('/fonts/CSAnikaDrawn-Demo.otf') format('opentype');
   font-weight: normal;
@@ -19,52 +12,14 @@
 }
 
 @font-face {
-  font-family: 'Arcade';
-  src: url('/fonts/Arcade.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
-
-@font-face {
   font-family: 'KarmaticArcade';
   src: url('/fonts/KarmaticArcade.ttf') format('truetype');
   font-weight: normal; font-style: normal;
 }
 
 @font-face {
-  font-family: 'CSGhitaMono';
-  src: url('/fonts/CSGhitaMono.otf') format('opentype');
-  font-weight: normal; font-style: normal;
-}
-
-@font-face {
-  font-family: 'RetroRookie';
-  src: url('/fonts/RetroRookie.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
-
-@font-face {
-  font-family: 'RetroMagic';
-  src: url('/fonts/RetroMagic.otf') format('opentype');
-  font-weight: normal; font-style: normal;
-}
-
-@font-face {
   font-family: 'SoftlyHandwritten';
   src: url('/fonts/SoftlyHandwritten.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PhittonDemo';
-  src: url('/fonts/PhittonDemo.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PhittonDemoItalic';
-  src: url('/fonts/PhittonDemoItalic.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
