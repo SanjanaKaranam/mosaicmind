@@ -26,5 +26,12 @@ dist-ssr
 # Local docs/planning notes
 docs/
 
+# Claude Code local config
+.claude/
+
+# Playwright output
+playwright-report/
+test-results/
+
 # Test/scratch scripts
 scripts/test*
