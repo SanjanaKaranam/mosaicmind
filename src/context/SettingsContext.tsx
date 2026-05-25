@@ -14,7 +14,14 @@ interface SettingsContextValue {
 
 const SettingsContext = createContext<SettingsContextValue | null>(null)
 
-const SETTINGS_VERSION = '3'
+const SETTINGS_VERSION = '4'
+
+function hexToRgba(hex: string, alpha: number) {
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgba(${r},${g},${b},${alpha})`
+}
 
 function applySettings(s: Settings) {
   const root = document.documentElement
@@ -26,6 +33,22 @@ function applySettings(s: Settings) {
   root.style.setProperty('--accent-text',   preset.text)
   root.style.setProperty('--font-family',   FONT_FAMILIES[s.font])
   root.style.setProperty('--font-scale',    FONT_SCALES[s.fontSize])
+
+  if (s.theme === 'dark') {
+    root.style.setProperty('--home-bg',           preset.homeBg)
+    root.style.setProperty('--home-bg-grid',      hexToRgba(preset.bannerBg, 0.18))
+    root.style.setProperty('--home-banner-bg',    preset.bannerBg)
+    root.style.setProperty('--home-banner-text',  preset.bannerText)
+    root.style.setProperty('--home-tile-gap',     '#8B6914')
+    root.style.setProperty('--home-tile-overlay', 'rgba(0,0,0,0.20)')
+  } else {
+    root.style.setProperty('--home-bg',           preset.bannerBg)
+    root.style.setProperty('--home-bg-grid',      hexToRgba(preset.homeBg, 0.18))
+    root.style.setProperty('--home-banner-bg',    preset.homeBg)
+    root.style.setProperty('--home-banner-text',  preset.bannerBg)
+    root.style.setProperty('--home-tile-gap',     '#D4A017')
+    root.style.setProperty('--home-tile-overlay', 'rgba(0,0,0,0.05)')
+  }
 }
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
