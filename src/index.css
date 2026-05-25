@@ -37,22 +37,13 @@
   --font-family: 'Poppins', sans-serif;
   --font-scale: 1;
 
-  /* Home page theme tokens */
-  --home-bg:           #2D6623;
+  /* Home page theme tokens — overridden at runtime by applySettings() */
+  --home-bg:           #2D6623; /* green default */
   --home-bg-grid:      rgba(255,240,100,0.18);
   --home-tile-gap:     #8B6914;
   --home-tile-overlay: rgba(0,0,0,0.20);
   --home-banner-bg:    #FFF078;
   --home-banner-text:  #000000;
-}
-
-[data-theme="light"] {
-  --home-bg:           #FFF078;
-  --home-bg-grid:      rgba(45,102,35,0.18);
-  --home-tile-gap:     #D4A017;
-  --home-tile-overlay: rgba(0,0,0,0.05);
-  --home-banner-bg:    #2D6623;
-  --home-banner-text:  #FFF078;
 }
 
 .bg-gray-950 { background-color: var(--bg-page); }
