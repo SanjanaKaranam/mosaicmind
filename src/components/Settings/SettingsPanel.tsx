@@ -69,7 +69,7 @@ export default function SettingsPanel({ onClose }: { onClose: () => void }) {
         <div className="flex flex-col gap-2">
           <span className="text-xs text-gray-500 uppercase tracking-widest">Color</span>
           <div className="flex gap-3">
-            {ACCENT_PRESETS.map(preset => (
+            {ACCENT_PRESETS.filter(p => !p.hidden).map(preset => (
               <button
                 key={preset.name}
                 title={preset.name}

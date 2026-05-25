@@ -38,7 +38,7 @@
   --font-scale: 1;
 
   /* Home page theme tokens — overridden at runtime by applySettings() */
-  --home-bg:           #6D0033; /* pink preset default */
+  --home-bg:           #2D6623; /* green default */
   --home-bg-grid:      rgba(255,240,100,0.18);
   --home-tile-gap:     #8B6914;
   --home-tile-overlay: rgba(0,0,0,0.20);
