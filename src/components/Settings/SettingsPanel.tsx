@@ -31,6 +31,7 @@ export default function SettingsPanel({ onClose }: { onClose: () => void }) {
     >
       <div
         className="bg-gray-900 border border-gray-700 rounded-t-2xl sm:rounded-2xl p-6 w-full sm:max-w-sm flex flex-col gap-5"
+        style={{ fontFamily: 'var(--font-family)' }}
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">

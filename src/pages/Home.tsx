@@ -263,10 +263,10 @@ export default function Home() {
                     }
                     <h2 className="text-lg text-black uppercase leading-tight" style={{ fontFamily: "'KarmaticArcade', 'Fredoka', sans-serif" }}>{game.title}</h2>
                   </div>
-                  <p className="text-sm text-black/70 mt-2 leading-snug flex-1" style={{ fontFamily: "'Balmont', sans-serif" }}>{game.description}</p>
+                  <p className="text-sm text-black/70 mt-2 leading-snug flex-1 font-bold">{game.description}</p>
                   <div className="flex justify-end mt-4">
                     <span className="inline-block text-xs uppercase px-3 py-1.5 border-2 border-black/40 rounded-sm"
-                      style={{ fontFamily: "'Balmont', sans-serif", fontWeight: 700, color: game.path ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)' }}>
+                      style={{ fontWeight: 700, color: game.path ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)' }}>
                       {game.path ? 'Play Now →' : 'Soon'}
                     </span>
                   </div>
