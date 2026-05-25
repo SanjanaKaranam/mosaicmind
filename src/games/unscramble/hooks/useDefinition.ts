@@ -20,6 +20,14 @@ export function getAnagramCount(word: string): number {
   return getAnagrams(word).length
 }
 
+function redactWords(text: string, words: string[]): string {
+  let result = text
+  for (const w of words) {
+    result = result.replace(new RegExp(`\\b${w}\\b`, 'gi'), '___')
+  }
+  return result
+}
+
 interface DefinitionState {
   entries: WordDefinition[]
   shown: boolean
@@ -44,7 +52,7 @@ export function useDefinition(word: string) {
           if (!res.ok) throw new Error()
           const data = await res.json()
           const def = data[0]?.meanings[0]?.definitions[0]?.definition
-          if (def) return { word: w, text: def, loading: false }
+          if (def) return { word: w, text: redactWords(def, anagrams), loading: false }
           throw new Error()
         } catch {
           // fallback to Wiktionary
@@ -54,7 +62,7 @@ export function useDefinition(word: string) {
             const data = await res.json()
             const raw = data.en?.[0]?.definitions?.[0]?.definition
             if (!raw) throw new Error()
-            const text = raw.replace(/<[^>]+>/g, '').trim()
+            const text = redactWords(raw.replace(/<[^>]+>/g, '').trim(), anagrams)
             return { word: w, text: text || 'No definition available', loading: false }
           } catch {
             return { word: w, text: 'Could not load definition', loading: false }

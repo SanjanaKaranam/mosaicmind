@@ -1,1 +1,87 @@
+@font-face {
+  font-family: 'CSAnikaDrawn';
+  src: url('/fonts/CSAnikaDrawn-Demo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Balmont';
+  src: url('/fonts/Balmont.ttf') format('truetype');
+  font-weight: normal; font-style: normal;
+}
+
+@font-face {
+  font-family: 'KarmaticArcade';
+  src: url('/fonts/KarmaticArcade.ttf') format('truetype');
+  font-weight: normal; font-style: normal;
+}
+
+@font-face {
+  font-family: 'SoftlyHandwritten';
+  src: url('/fonts/SoftlyHandwritten.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Abril+Fatface&family=Oswald:wght@700&family=Press+Start+2P&family=Fredoka:wght@600;700&family=Poppins:wght@400;600;700;800&family=Inter:wght@400;600;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
+
+:root {
+  --accent: #E90074;
+  --accent-hover: #FF4191;
+  --accent-subtle: rgba(233, 0, 116, 0.15);
+  --accent-text: #FFF078;
+
+  --bg-page: #000000;
+  --font-family: 'Poppins', sans-serif;
+  --font-scale: 1;
+
+  /* Home page theme tokens — overridden at runtime by applySettings() */
+  --home-bg:           #2D6623; /* green default */
+  --home-bg-grid:      rgba(255,240,100,0.18);
+  --home-tile-gap:     #8B6914;
+  --home-tile-overlay: rgba(0,0,0,0.20);
+  --home-banner-bg:    #FFF078;
+  --home-banner-text:  #000000;
+}
+
+.bg-gray-950 { background-color: var(--bg-page); }
+
+.logo-text { font-family: 'Poppins', sans-serif; }
+
+html {
+  font-size: calc(16px * var(--font-scale));
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+/* ── Light theme overrides ──────────────────────────────────────────────────
+   These live outside @layer so they beat Tailwind's @layer utilities styles.  */
+
+[data-theme="light"] .bg-gray-950   { background-color: #f8fafc; }
+[data-theme="light"] .bg-gray-900   { background-color: #f1f5f9; }
+[data-theme="light"] .bg-gray-900\/50 { background-color: rgba(241, 245, 249, 0.6); }
+[data-theme="light"] .bg-gray-800   { background-color: #e2e8f0; }
+[data-theme="light"] .bg-gray-700   { background-color: #cbd5e1; }
+
+[data-theme="light"] .text-white    { color: #1e293b; }
+[data-theme="light"] .text-gray-300 { color: #374151; }
+[data-theme="light"] .text-gray-400 { color: #4b5563; }
+[data-theme="light"] .text-gray-500 { color: #64748b; }
+[data-theme="light"] .text-gray-600 { color: #94a3b8; }
+
+[data-theme="light"] .border-gray-700 { border-color: #cbd5e1; }
+[data-theme="light"] .border-gray-800 { border-color: #e2e8f0; }
+[data-theme="light"] .border-gray-900 { border-color: #f1f5f9; }
+
+/* Keep white text on colored (accent / green) backgrounds */
+[data-theme="light"] .bg-green-900\/50 { background-color: rgba(20, 83, 45, 0.12); }
+[data-theme="light"] .text-green-300   { color: #15803d; }
+[data-theme="light"] .border-green-500 { border-color: #16a34a; }
+
+/* Primary CTA buttons keep white text */
+[data-theme="light"] .bg-purple-600,
+[data-theme="light"] .bg-\[var\(--accent\)\] { color: #ffffff; }
