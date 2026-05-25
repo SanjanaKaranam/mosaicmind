@@ -76,7 +76,7 @@ function TilesMosaic() {
     <div
       className="absolute inset-0 overflow-hidden"
       aria-hidden="true"
-      style={{ backgroundColor: '#8B6914' }}
+      style={{ backgroundColor: 'var(--home-tile-gap)' }}
     >
       <div
         style={{
@@ -105,7 +105,7 @@ function TilesMosaic() {
           )
         })}
       </div>
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0" style={{ backgroundColor: 'var(--home-tile-overlay)' }} />
     </div>
   )
 }
@@ -206,10 +206,10 @@ export default function Home() {
     <div
       className="min-h-screen text-white overflow-x-hidden flex flex-col"
       style={{
-        backgroundColor: '#2D6623',
+        backgroundColor: 'var(--home-bg)',
         backgroundImage: [
-          'linear-gradient(rgba(160,255,60,0.14) 1px, transparent 1px)',
-          'linear-gradient(90deg, rgba(160,255,60,0.14) 1px, transparent 1px)',
+          'linear-gradient(var(--home-bg-grid) 1px, transparent 1px)',
+          'linear-gradient(90deg, var(--home-bg-grid) 1px, transparent 1px)',
         ].join(', '),
         backgroundSize: '44px 44px',
       }}
@@ -240,10 +240,10 @@ export default function Home() {
       </section>
 
       {/* ── Divider band ──────────────────────────────────────────────── */}
-      <div className="relative bg-[#FFF078] border-y-4 border-black px-6 py-3 overflow-hidden">
+      <div className="relative border-y-4 border-black px-6 py-3 overflow-hidden" style={{ backgroundColor: 'var(--home-banner-bg)' }}>
         <div className="absolute inset-y-0 left-0 w-16" style={hatch} />
         <div className="absolute inset-y-0 right-0 w-16" style={hatch} />
-        <p className="text-center text-black font-black uppercase tracking-[0.3em] text-sm" style={fredoka}>
+        <p className="text-center font-black uppercase tracking-[0.3em] text-sm" style={{ ...fredoka, color: 'var(--home-banner-text)' }}>
           ↓ &nbsp; PICK A GAME &nbsp; ↓
         </p>
       </div>
@@ -289,10 +289,10 @@ export default function Home() {
       </section>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}
-      <div className="relative bg-[#FFF078] border-t-4 border-black px-6 py-4 overflow-hidden">
+      <div className="relative border-t-4 border-black px-6 py-4 overflow-hidden" style={{ backgroundColor: 'var(--home-banner-bg)' }}>
         <div className="absolute inset-y-0 left-0 w-16" style={hatch} />
         <div className="absolute inset-y-0 right-0 w-16" style={hatch} />
-        <p className="text-center text-black text-[9px] uppercase tracking-widest" style={pixel}>
+        <p className="text-center text-[9px] uppercase tracking-widest" style={{ ...pixel, color: 'var(--home-banner-text)' }}>
           ✦ &nbsp; More games coming soon &nbsp; ✦
         </p>
       </div>
