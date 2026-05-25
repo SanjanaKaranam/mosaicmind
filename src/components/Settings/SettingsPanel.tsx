@@ -1,5 +1,5 @@
 import { useSettings } from '../../context/SettingsContext'
-import { ACCENT_PRESETS } from '../../context/settingsConfig'
+import { ACCENT_PRESETS, DEFAULT_SETTINGS } from '../../context/settingsConfig'
 import type { FontFamily, FontSize, Theme } from '../../context/settingsConfig'
 
 const FONTS: { value: FontFamily; label: string; preview: string }[] = [
@@ -130,6 +130,12 @@ export default function SettingsPanel({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         </div>
+        <button
+          onClick={() => update(DEFAULT_SETTINGS)}
+          className="w-full py-2 rounded-lg border border-gray-700 text-sm text-gray-500 hover:border-gray-500 hover:text-gray-300 transition-colors"
+        >
+          Reset to default
+        </button>
       </div>
     </div>
   )
