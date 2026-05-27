@@ -79,7 +79,7 @@ export default function HowToPlayModal({ onClose }: Props) {
 
           <div className="flex flex-col gap-1.5">
             <p className="text-xs text-gray-500 uppercase tracking-widest">Scoring</p>
-            <p className="text-gray-400">Points for correct guesses. Hints and reveals reduce your score.</p>
+            <p className="text-gray-400">1 point per word you unscramble correctly. Revealing a word scores 0 for that word — hints and definitions don't affect your score.</p>
           </div>
         </div>
 

@@ -3,11 +3,14 @@ import { ACCENT_PRESETS, DEFAULT_SETTINGS } from '../../context/settingsConfig'
 import type { FontFamily, FontSize, Theme } from '../../context/settingsConfig'
 
 const FONTS: { value: FontFamily; label: string; preview: string }[] = [
-  { value: 'poppins', label: 'Poppins',    preview: "'Poppins', sans-serif" },
-  { value: 'system',  label: 'System',     preview: 'system-ui, -apple-system, sans-serif' },
-  { value: 'inter',   label: 'Inter',      preview: "'Inter', sans-serif" },
-  { value: 'nunito',  label: 'Nunito',     preview: "'Nunito', sans-serif" },
-  { value: 'mono',    label: 'Monospace',  preview: "'JetBrains Mono', monospace" },
+  { value: 'fredoka',         label: 'Fredoka',         preview: "'Fredoka', 'Poppins', sans-serif" },
+  { value: 'league-spartan',  label: 'League Spartan',  preview: "'LeagueSpartan', 'Poppins', sans-serif" },
+  { value: 'talina',          label: 'Talina',          preview: "'TalinaDemo', 'Poppins', sans-serif" },
+  { value: 'poppins',         label: 'Poppins',         preview: "'Poppins', sans-serif" },
+  { value: 'system',          label: 'System',          preview: 'system-ui, -apple-system, sans-serif' },
+  { value: 'inter',           label: 'Inter',           preview: "'Inter', sans-serif" },
+  { value: 'nunito',          label: 'Nunito',          preview: "'Nunito', sans-serif" },
+  { value: 'mono',            label: 'Monospace',       preview: "'JetBrains Mono', monospace" },
 ]
 
 const SIZES: { value: FontSize; label: string }[] = [

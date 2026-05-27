@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Unscramble from './games/unscramble'
@@ -16,6 +16,8 @@ function GearIcon() {
 
 export default function App() {
   const { panelOpen, openPanel, closePanel } = useSettings()
+  const location = useLocation()
+  const showFloatingSettings = location.pathname === '/'
 
   return (
     <>
@@ -25,13 +27,15 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <button
-        onClick={openPanel}
-        className="fixed top-4 right-4 z-40 w-11 h-11 rounded-full bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-[var(--accent)] transition-colors flex items-center justify-center"
-        aria-label="Open settings"
-      >
-        <GearIcon />
-      </button>
+      {showFloatingSettings && (
+        <button
+          onClick={openPanel}
+          className="fixed top-4 right-4 z-40 w-11 h-11 rounded-full bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-[var(--accent)] transition-colors flex items-center justify-center"
+          aria-label="Open settings"
+        >
+          <GearIcon />
+        </button>
+      )}
 
       {panelOpen && <SettingsPanel onClose={closePanel} />}
     </>
