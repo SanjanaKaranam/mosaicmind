@@ -1,8 +1,8 @@
 interface Props {
-  scrambled: string
-  input: string
+  scrambled:       string
+  input:           string
   revealedIndices: number[]
-  currentWord: string
+  currentWord:     string
 }
 
 function getConsumedIndices(scrambled: string, input: string): number[] {
@@ -20,29 +20,35 @@ function getConsumedIndices(scrambled: string, input: string): number[] {
   return consumed
 }
 
+function tileSize(len: number): string {
+  if (len <= 4)  return '7rem'
+  if (len <= 6)  return '6rem'
+  if (len <= 8)  return '5rem'
+  if (len <= 10) return '4rem'
+  if (len <= 12) return '3.25rem'
+  return '2.75rem'
+}
+
 export default function ScrambledWord({ scrambled, input }: Props) {
   const consumedIndices = getConsumedIndices(scrambled, input)
+  const fontSize = tileSize(scrambled.length)
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <div className="flex gap-3 flex-wrap justify-center">
-        {scrambled.split('').map((letter, i) => {
-          const consumed = consumedIndices.includes(i)
-          return (
-            <div
-              key={i}
-              className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-all duration-150 ${
-                consumed
-                  ? 'bg-gray-900 border-gray-800 text-gray-800'
-                  : 'bg-gray-800 border-gray-700 text-white'
-              }`}
-            >
-              {consumed ? '' : letter}
-            </div>
-          )
-        })}
-      </div>
-
+    <div className="flex gap-1 justify-center" style={{ flexWrap: 'nowrap' }}>
+      {scrambled.split('').map((letter, i) => {
+        const consumed = consumedIndices.includes(i)
+        return (
+          <span
+            key={i}
+            className={`leading-none uppercase select-none transition-all duration-150 ${
+              consumed ? 'opacity-0' : 'opacity-100'
+            }`}
+            style={{ fontFamily: "'Keycapsflf', monospace", color: 'white', fontSize }}
+          >
+            {letter}
+          </span>
+        )
+      })}
     </div>
   )
 }

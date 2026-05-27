@@ -24,21 +24,43 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'LeagueSpartan';
+  src: url('/fonts/LeagueSpartan-Bold.woff2') format('woff2'),
+       url('/fonts/LeagueSpartan-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TalinaDemo';
+  src: url('/fonts/TalinaDemo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Keycapsflf';
+  src: url('/fonts/Keycapsflf.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Abril+Fatface&family=Oswald:wght@700&family=Press+Start+2P&family=Fredoka:wght@600;700&family=Poppins:wght@400;600;700;800&family=Inter:wght@400;600;700&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --accent: #E90074;
-  --accent-hover: #FF4191;
-  --accent-subtle: rgba(233, 0, 116, 0.15);
-  --accent-text: #FFF078;
+  --accent: #22c55e;
+  --accent-hover: #4ade80;
+  --accent-subtle: rgba(34, 197, 94, 0.15);
+  --accent-text: #86efac;
 
   --bg-page: #000000;
   --font-family: 'Poppins', sans-serif;
   --font-scale: 1;
 
   /* Home page theme tokens — overridden at runtime by applySettings() */
-  --home-bg:           #2D6623; /* green default */
+  --home-bg:           #0A1F07; /* dark green default */
   --home-bg-grid:      rgba(255,240,100,0.18);
   --home-tile-gap:     #8B6914;
   --home-tile-overlay: rgba(0,0,0,0.20);
