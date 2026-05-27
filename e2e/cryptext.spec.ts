@@ -28,8 +28,8 @@ test.describe('CrypText mode select', () => {
 
   test('selecting a mode highlights it', async ({ page }) => {
     await page.getByText('Random').click()
-    const randomBtn = page.getByText('Random').locator('..')
-    await expect(randomBtn).toHaveClass(/border-\[var\(--accent\)\]/)
+    const randomBtn = page.getByRole('button', { name: /Random/ })
+    await expect(randomBtn).toHaveClass(/shadow-md/)
   })
 })
 
@@ -62,7 +62,7 @@ test.describe('CrypText gameplay', () => {
     await page.getByText('Random').click()
     await page.getByText('Untimed').click()
     await page.getByText('Start Game').click()
-    await page.getByText('← Home').click()
+    await page.getByText('⌂ Game Home').click()
     await expect(page.getByRole('heading', { name: 'CRYPTEXT' })).toBeVisible()
   })
 })
