@@ -1,6 +1,6 @@
 export type Theme = 'dark' | 'light'
 export type FontSize = 'sm' | 'md' | 'lg'
-export type FontFamily = 'system' | 'inter' | 'nunito' | 'mono' | 'poppins'
+export type FontFamily = 'system' | 'inter' | 'nunito' | 'mono' | 'poppins' | 'fredoka' | 'league-spartan' | 'talina'
 
 export interface AccentPreset {
   name: string
@@ -16,7 +16,7 @@ export interface AccentPreset {
 }
 
 export const ACCENT_PRESETS: AccentPreset[] = [
-  { name: 'Default', accent: '#16a34a', hover: '#22c55e', subtle: 'rgba(22,163,74,0.15)',  text: '#86efac', homeBg: '#2D6623', bannerBg: '#FFF078', bannerText: '#000000', hidden: true },
+  { name: 'Default', accent: '#22c55e', hover: '#4ade80', subtle: 'rgba(34,197,94,0.15)',  text: '#86efac', homeBg: '#0A1F07', bannerBg: '#FFF078', bannerText: '#000000', hidden: true },
   { name: 'Pink',    accent: '#E90074', hover: '#FF4191', subtle: 'rgba(233,0,116,0.15)',   text: '#FFF078', homeBg: '#6D0033', bannerBg: '#FFF078', bannerText: '#000000' },
   { name: 'Purple',  accent: '#9333ea', hover: '#a855f7', subtle: 'rgba(147,51,234,0.15)', text: '#d8b4fe', homeBg: '#2D0A6B', bannerBg: '#FFF078', bannerText: '#000000' },
   { name: 'Blue',    accent: '#2563eb', hover: '#3b82f6', subtle: 'rgba(37,99,235,0.15)',  text: '#93c5fd', homeBg: '#0C2461', bannerBg: '#FFF078', bannerText: '#000000' },
@@ -26,11 +26,14 @@ export const ACCENT_PRESETS: AccentPreset[] = [
 ]
 
 export const FONT_FAMILIES: Record<FontFamily, string> = {
-  system:  'system-ui, -apple-system, sans-serif',
-  poppins: "'Poppins', sans-serif",
-  inter:   "'Inter', sans-serif",
-  nunito:  "'Nunito', sans-serif",
-  mono:    "'JetBrains Mono', monospace",
+  fredoka:        "'Fredoka', 'Poppins', sans-serif",
+  'league-spartan': "'LeagueSpartan', 'Poppins', sans-serif",
+  talina:         "'TalinaDemo', 'Poppins', sans-serif",
+  poppins:        "'Poppins', sans-serif",
+  system:         'system-ui, -apple-system, sans-serif',
+  inter:          "'Inter', sans-serif",
+  nunito:         "'Nunito', sans-serif",
+  mono:           "'JetBrains Mono', monospace",
 }
 
 export const FONT_SCALES: Record<FontSize, string> = {
@@ -48,7 +51,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   theme:    'dark',
-  accent:   '#16a34a',
+  accent:   '#22c55e',
   fontSize: 'md',
-  font:     'poppins',
+  font:     'league-spartan',
 }

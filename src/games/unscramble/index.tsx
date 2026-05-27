@@ -2,12 +2,20 @@ import { useUnscramble } from './hooks/useUnscramble'
 import ModeSelect from './components/ModeSelect'
 import GameScreen from './components/GameScreen'
 import ScoreScreen from './components/ScoreScreen'
+import GameLayout from './components/GameLayout'
 
 export default function Unscramble() {
   const game = useUnscramble()
+  const inGame = game.phase === 'playing' || game.phase === 'reveal' || game.phase === 'finished'
+  const canRestart = inGame && game.mode?.play !== 'daily'
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <GameLayout
+      title="CrypText"
+      onHome={inGame ? game.goHome : undefined}
+      onRestart={canRestart ? game.restartGame : undefined}
+      onEndGame={(game.phase === 'playing' || game.phase === 'reveal') && game.mode?.play === 'unlimited' ? game.endGame : undefined}
+    >
       {game.phase === 'idle' && (
         <ModeSelect onStart={game.startGame} />
       )}
@@ -36,8 +44,6 @@ export default function Unscramble() {
           onGoHome={game.goHome}
           onRestart={game.restartGame}
           onShuffle={game.shuffleScramble}
-          isUnlimited={game.mode?.play === 'unlimited'}
-          onEndGame={game.endGame}
         />
       )}
       {game.phase === 'finished' && game.mode && (
@@ -51,6 +57,6 @@ export default function Unscramble() {
           onReplay={game.replayGame}
         />
       )}
-    </div>
+    </GameLayout>
   )
 }

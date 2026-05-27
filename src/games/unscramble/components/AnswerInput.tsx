@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react'
 
 interface Props {
-  value: string
-  currentWord: string
-  onChange: (value: string) => void
-  disabled: boolean
-  correctFlash?: boolean
+  value:            string
+  currentWord:      string
+  onChange:         (value: string) => void
+  disabled:         boolean
+  correctFlash?:    boolean
   revealedIndices?: number[]
+  cursorPos?:       number
+  onCursorMove?:    (pos: number) => void
+  onInputKeyDown?:  (e: React.KeyboardEvent<HTMLInputElement>) => void
+  slots?:           string[]
 }
 
 function letterCount(word: string): Record<string, number> {
@@ -31,32 +35,42 @@ function filterToAvailable(raw: string, currentWord: string, locked: number[]): 
   return result.slice(0, maxLen)
 }
 
+function tileSize(len: number): string {
+  if (len <= 4)  return '7rem'
+  if (len <= 6)  return '6rem'
+  if (len <= 8)  return '5rem'
+  if (len <= 10) return '4rem'
+  if (len <= 12) return '3.25rem'
+  return '2.75rem'
+}
+
 export default function AnswerInput({
-  value,
-  currentWord,
-  onChange,
-  disabled,
-  correctFlash = false,
-  revealedIndices = [],
+  value, currentWord, onChange, disabled, correctFlash = false, revealedIndices = [],
+  cursorPos, onCursorMove, onInputKeyDown, slots,
 }: Props) {
   const ref = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    ref.current?.focus()
-  }, [disabled])
+  useEffect(() => { ref.current?.focus() }, [disabled])
 
-  // Build merged display slots: locked positions show hint letter, others show user chars
+  let uiCounter = 0
   const mergedSlots = Array.from({ length: currentWord.length }, (_, i) => {
-    if (revealedIndices.includes(i)) return { letter: currentWord[i], isLocked: true }
-    let ui = 0
-    for (let j = 0; j < i; j++) if (!revealedIndices.includes(j)) ui++
-    return { letter: value[ui] ?? '', isLocked: false }
+    if (revealedIndices.includes(i)) return { letter: currentWord[i], isLocked: true, ui: -1 }
+    const ui = uiCounter++
+    const letter = slots ? (slots[ui] ?? '') : (value[ui] ?? '')
+    return { letter, isLocked: false, ui }
   })
 
-  // Active tile = first non-locked, non-filled position
-  const activeIdx = correctFlash || disabled
-    ? -1
-    : mergedSlots.findIndex(s => !s.isLocked && !s.letter)
+  // When cursor mode is active, highlight the exact slot at cursorPos
+  const activeIdx = (() => {
+    if (correctFlash || disabled) return -1
+    if (cursorPos !== undefined) {
+      return mergedSlots.findIndex(s => !s.isLocked && s.ui === cursorPos)
+    }
+    return mergedSlots.findIndex(s => !s.isLocked && !s.letter)
+  })()
+
+  const fontSize = tileSize(currentWord.length)
+  const interactive = !!onCursorMove && !disabled && !correctFlash
 
   return (
     <div className="flex flex-col items-center gap-4" onClick={() => ref.current?.focus()}>
@@ -66,7 +80,10 @@ export default function AnswerInput({
         value={value}
         maxLength={currentWord.length - revealedIndices.length}
         disabled={disabled}
-        onChange={e => onChange(filterToAvailable(e.target.value, currentWord, revealedIndices))}
+        onChange={e => {
+          if (!onInputKeyDown && !slots) onChange(filterToAvailable(e.target.value, currentWord, revealedIndices))
+        }}
+        onKeyDown={onInputKeyDown}
         className="sr-only"
         aria-label="Type your answer"
         autoComplete="off"
@@ -75,27 +92,64 @@ export default function AnswerInput({
         spellCheck={false}
       />
 
-      <div className="flex gap-3 flex-wrap justify-center">
+      <div className="flex gap-1 justify-center items-center" style={{ flexWrap: 'nowrap' }}>
         {mergedSlots.map((slot, i) => {
           const isActive = i === activeIdx
+
+          if (slot.letter) {
+            const color = correctFlash
+              ? '#86efac'
+              : slot.isLocked
+              ? '#fde047'
+              : 'white'
+            return (
+              <span
+                key={i}
+                className={`leading-none uppercase select-none transition-all ${interactive && !slot.isLocked ? 'cursor-pointer' : ''}`}
+                style={{
+                  fontFamily: "'Keycapsflf', monospace",
+                  color,
+                  fontSize,
+                  opacity: isActive ? 0.55 : 1,
+                }}
+                onClick={interactive && !slot.isLocked ? (e) => {
+                  e.stopPropagation()
+                  onCursorMove!(slot.ui)
+                  ref.current?.focus()
+                } : undefined}
+              >
+                {slot.letter}
+              </span>
+            )
+          }
+
           return (
-            <div
+            <span
               key={i}
-              className={`w-16 h-20 flex items-center justify-center rounded-xl border-2 text-3xl font-bold uppercase transition-colors select-none ${
-                correctFlash
-                  ? 'bg-green-900 border-green-400 text-green-300'
-                  : slot.isLocked
-                  ? 'border-yellow-400 text-yellow-200'
-                  : slot.letter
-                  ? 'bg-gray-700 border-[var(--accent)] text-white'
-                  : isActive
-                  ? 'bg-gray-900 border-[var(--accent)] border-dashed text-transparent'
-                  : 'bg-gray-900 border-gray-700 text-transparent'
-              }`}
-              style={slot.isLocked && !correctFlash ? { backgroundColor: 'rgba(234,179,8,0.15)' } : {}}
+              className={`relative leading-none inline-block ${interactive ? 'cursor-pointer' : ''}`}
+              onClick={interactive ? (e) => {
+                e.stopPropagation()
+                onCursorMove!(slot.ui)
+                ref.current?.focus()
+              } : undefined}
             >
-              {slot.letter || ''}
-            </div>
+              {/* invisible character — reserves exact glyph dimensions */}
+              <span
+                className="uppercase"
+                style={{ fontFamily: "'Keycapsflf', monospace", fontSize, opacity: 0 }}
+                aria-hidden="true"
+              >
+                a
+              </span>
+              {/* visible box overlay */}
+              <span
+                className={`absolute inset-[3px] rounded-xl border-2 transition-colors ${
+                  isActive
+                    ? 'border-[var(--accent)] bg-[var(--accent-subtle)]'
+                    : 'border-white/25 bg-black/15'
+                }`}
+              />
+            </span>
           )
         })}
       </div>

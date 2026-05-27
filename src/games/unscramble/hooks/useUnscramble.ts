@@ -142,11 +142,11 @@ export function useUnscramble() {
         const doneKey = `unscramble_daily_done_${today}`
         const existing = localStorage.getItem(doneKey)
         const done = existing ? JSON.parse(existing) : {}
-        done[mode.timing] = true
+        done[mode.timing] = { score, total: words.length }
         localStorage.setItem(doneKey, JSON.stringify(done))
       } catch {}
     }
-  }, [phase, mode])
+  }, [phase, mode, score, words.length])
 
   // Timer countdown
   useEffect(() => {
@@ -306,11 +306,14 @@ export function useUnscramble() {
   }, [mode])
 
   const replayGame = useCallback(() => {
-    if (!mode || words.length === 0) return
+    if (!mode) return
     const key = getStorageKey(mode)
     if (key) localStorage.removeItem(key)
+    localStorage.removeItem(LAST_KEY)
+    const newWords = pickWords(mode.play, mode.wordCount)
+    setWords(newWords)
     setCurrentRound(0)
-    setScrambled(scramble(words[0]))
+    setScrambled(scramble(newWords[0]))
     setScore(0)
     setWrongWords([])
     setHintsUsed({ letters: 0, definitions: 0 })
@@ -320,7 +323,7 @@ export function useUnscramble() {
     setRevealReason('timeout')
     setPaused(false)
     setPhase('playing')
-  }, [mode, words])
+  }, [mode])
 
   const resetGame = useCallback(() => {
     if (mode) {

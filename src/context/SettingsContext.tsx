@@ -14,7 +14,7 @@ interface SettingsContextValue {
 
 const SettingsContext = createContext<SettingsContextValue | null>(null)
 
-const SETTINGS_VERSION = '4'
+const SETTINGS_VERSION = '7'
 
 function hexToRgba(hex: string, alpha: number) {
   const r = parseInt(hex.slice(1, 3), 16)
