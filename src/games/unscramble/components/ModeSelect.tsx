@@ -114,10 +114,10 @@ export default function ModeSelect({ onStart }: Props) {
             <button
               key={opt.value}
               onClick={() => setPlay(opt.value)}
-              className={`w-full py-4 px-5 rounded-xl border-2 text-left transition-all text-base flex items-center justify-between gap-3 ${
+              className={`w-full py-4 px-5 rounded-xl text-left transition-all text-base flex items-center justify-between gap-3 ${
                 play === opt.value
-                  ? 'border-black/50 shadow-md'
-                  : 'border-black/15 opacity-70 hover:opacity-100 hover:border-black/35'
+                  ? 'border-4 border-rose-500 shadow-md'
+                  : 'border-2 border-black/15 opacity-70 hover:opacity-100 hover:border-black/35'
               }`}
               style={{ backgroundColor: 'var(--home-banner-bg)', color: 'var(--home-banner-text)' }}
             >
@@ -151,12 +151,12 @@ export default function ModeSelect({ onStart }: Props) {
               key={opt.value}
               onClick={() => !disabled && setTiming(opt.value)}
               disabled={disabled}
-              className={`w-full py-4 px-5 rounded-xl border-2 text-left transition-all text-base ${
+              className={`w-full py-4 px-5 rounded-xl text-left transition-all text-base ${
                 disabled
-                  ? 'border-black/10 opacity-40 cursor-not-allowed'
+                  ? 'border-2 border-black/10 opacity-40 cursor-not-allowed'
                   : timing === opt.value
-                  ? 'border-black/50 shadow-md'
-                  : 'border-black/15 opacity-70 hover:opacity-100 hover:border-black/35'
+                  ? 'border-4 border-rose-500 shadow-md'
+                  : 'border-2 border-black/15 opacity-70 hover:opacity-100 hover:border-black/35'
               }`}
               style={{ backgroundColor: 'var(--home-banner-bg)', color: 'var(--home-banner-text)' }}
             >
